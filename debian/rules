@@ -1,14 +1,11 @@
 #!/usr/bin/make -f
 
 CFLAGS := -O2
-IE := install -m755 -s
+IE := install -m755
 
 # Some special build options
 ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
   CFLAGS += -g
-  ifneq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-    IE := install -m755
-  endif
 endif
 
 build: build-stamp
