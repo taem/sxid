@@ -1,0 +1,70 @@
+.TH SXID 1 "January 2002" "sXid @VERSION@"
+.SH NAME
+sxid \- check for changes in s[ug]id files and directories
+.SH SYNOPSIS
+.B sxid
+[ --config <file> ] [ --nomail ] [ --spotcheck ] [ --listall ]
+.br
+.SH DESCRIPTION
+.I  Sxid
+checks for changes in suid and sgid files and directories based on its last
+check. Logs are stored by default in /var/log/sxid.log.
+The changes are then emailed to the address specified in the configuration
+file. The default location for the config file is
+.I @TMPCONF@/sxid.conf
+but this can be overridden with the --config option and specifying an
+alternate location.
+.SH "OUTPUT"
+The program outputs several different checks concerning the current status of
+the suid and sgid files and directories on the system on which it was run. This
+is a basic overview of the format.
+ 
+In the add remove section, new files are preceded by a '+', old ones
+are preceded by a '-' NOTE: that removed does not mean gone from the
+filesystem, just that it is no longer sgid or suid.
+
+Most of it is pretty easy to understand. On the sections that show
+changes in the file's info (uid, gid, modes...) the format is
+old->new. So if the old owner was 'mail' and it is now 'root' then it
+shows it as mail->root.
+
+The list of files in the checks is in the following format:
+
+        /full/path              *user.group    MODE
+
+(MODE is the 4 digit mode, as in 4755)
+
+In the changes section, if the line is preceded by an 'i' then that
+item has changed inodes since the last check (regardless of any
+s[ug]id change), if there is an 'm' then the md5sum has changed.
+
+If a user or group entry is preceded by a '*' then it's execution bit is
+set (ie. *root.wheel is suid, root.*wheel is sgid, *root.*wheel is +s).
+
+On the forbidden directories, if
+.I ENFORCE
+is enabled an 'r' will precede forbidden items that were succesfully -s'd,
+and an '!' will show that it was unsuccesfully -s'd (for what ever
+reason).
+.SH OPTIONS
+.TP
+\fB\-c, --config <file>\fR
+specifies an alternate configuration file
+.TP
+\fB\-n, --nomail\fR
+sends output to stdout instead of emailing, useful for spot checks
+.TP
+\fB\-k, --spotcheck\fR
+Checks for changes by recursing the current working directory. Log files
+will not be rotated and no email sent. All output will go to stdout.
+.TP
+\fB\-l, --listall\fR
+Useful when doing
+.B --spotcheck
+or
+.B --nomail
+to list all files that are logged, regardless of changes.
+.SH "REPORTING BUGS"
+Report bugs to Ben Collins <bcollins@debian.org>.
+.SH "SEE ALSO"
+sxid.conf(5)

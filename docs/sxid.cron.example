@@ -1,0 +1,2 @@
+# Sample crontab entry to run every day at 4am
+0 4 * * * /usr/bin/sxid

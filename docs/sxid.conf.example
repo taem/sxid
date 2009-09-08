@@ -1,0 +1,53 @@
+# Configuration file for sXid
+# Note that all directories must be absolute with no trailing /'s
+
+# Where to begin our file search
+SEARCH = "/"
+
+# Which subdirectories to exclude from searching
+EXCLUDE = "/proc /mnt /cdrom /floppy"
+
+# Who to send reports to
+EMAIL = "root"
+
+# Always send reports, even when there are no changes?
+ALWAYS_NOTIFY = "no"
+
+# Where to keep interim logs. This will rotate 'x' number of
+# times based on KEEP_LOGS below
+LOG_FILE = "/var/log/sxid.log"
+
+# How many logs to keep
+KEEP_LOGS = "5"
+
+# Rotate the logs even when there are no changes?
+ALWAYS_ROTATE = "no"
+
+# Directories where +s is forbidden (these are searched
+# even if not explicitly in SEARCH), EXCLUDE rules apply
+FORBIDDEN = "/home /tmp"
+
+# Remove (-s) files found in forbidden directories?
+ENFORCE = "no"
+
+# This implies ALWAYS_NOTIFY. It will send a full list of
+# entries along with the changes
+LISTALL = "no"
+
+# Ignore entries for directories in these paths
+# (this means that only files will be recorded, you
+# can effectively ignore all directory entries by
+# setting this to "/"). The default is /home since
+# some systems have /home g+s.
+IGNORE_DIRS = "/home"
+
+# File that contains a list of (each on it's own line)
+# other files that sxid should monitor. This is useful
+# for files that aren't +s, but relate to system
+# integrity (tcpd, inetd, apache...).
+# EXTRA_LIST = "/etc/sxid.list"
+
+# Mail program. This changes the default compiled in
+# mailer for reports. You only need this if you have changed
+# it's location and don't want to recompile sxid.
+# MAIL_PROG = "/usr/bin/mail"
