@@ -1,0 +1,56 @@
+#!/usr/bin/make -f
+
+CFLAGS := -O2
+IE := install -m755 -s
+
+# Some special build options
+ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+  CFLAGS += -g
+  ifneq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+    IE := install -m755
+  endif
+endif
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	touch configure.in && touch aclocal.m4 && touch configure
+	$(MAKE) CFLAGS="$(CFLAGS)"
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp install-stamp
+	-$(MAKE) distclean
+	dh_clean
+
+install: install-stamp
+install-stamp: build-stamp
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	$(MAKE) install DESTDIR=`pwd`/debian/tmp INSTALL_PROGRAM="$(IE)" \
+		mandir=/usr/share/man
+	touch install-stamp
+
+binary-indep: build install
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs README
+	dh_installcron
+	dh_installchangelogs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

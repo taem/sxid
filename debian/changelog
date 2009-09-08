@@ -1,0 +1,237 @@
+sxid (4.0.5-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fixed bashisms in source/Makefile.in, using patch from Ubuntu.
+    Closes: #379575.
+  * Fixed typos in description. Closes: #438710.
+
+ -- Lucas Nussbaum <lucas@lucas-nussbaum.net>  Sat, 19 Jan 2008 17:27:31 +0100
+
+sxid (4.0.5) unstable; urgency=low
+
+  * Work around for timestamp skew. Closes: #204979
+
+ -- Ben Collins <bcollins@debian.org>  Fri,  6 Feb 2004 10:12:46 -0500
+
+sxid (4.0.4) unstable; urgency=low
+
+  * Added build-depends: Closes: #190533
+  * User user:group syntax instead of user.group: Closes: #204938
+
+ -- Ben Collins <bcollins@debian.org>  Mon, 11 Aug 2003 11:36:16 -0400
+
+sxid (4.0.3) unstable; urgency=low
+
+  * configure.in: Provide a default for mail_prog. Closes: #132958
+  * Completely moved to using subversion for revision control now.
+
+ -- Ben Collins <bcollins@debian.org>  Mon, 11 Feb 2002 03:01:38 -0500
+
+sxid (4.0.2) unstable; urgency=low
+
+  * debian/control:Depends: added mail-transport-agent
+  * configure.in: removed some uneeded cruft
+  * source/sxid.h: removed some more cruft
+  * updated copyrights
+  * Use snprintf where needed
+
+ -- Ben Collins <bcollins@debian.org>  Mon, 21 Jan 2002 23:57:21 -0500
+
+sxid (4.0.1) unstable; urgency=low
+
+  * Added RPM spec file from Alexandr D. Kanevskiy <kad@blackcatlinux.com>
+  * Better formatting in emails when items were longer than assumed
+  * Modified configure.in slightly
+  * cleaned up rules file and debian dir
+  * new standards version
+
+ -- Ben Collins <bcollins@debian.org>  Sat,  2 Oct 1999 21:57:23 -0400
+
+sxid (4.0.0) unstable; urgency=low
+
+  * Merged REVISIONS into debian/changelog and removed from source
+  * Modifed install to use 0.0 for owner group instead of root.root
+    (helps when compiling on non-linux systems)
+  * Updated README w/ Tru64 support
+  * Consolidated includes into one sxid.h
+  * Added static to some functions
+  * Removed -Wall from CFLAGS
+  * Added EXTRA_LIST function to allow specifying specific files and
+    directories for adding to the database (including non-s[ug]id ones)
+  * Cleaned up config file parsing routines (removed extraneous routine)
+  * Switched some strtok() calls to strtok_r(). Added a generic strtok_r()
+    for systems that don't have it (from bits/string2.h in glibc 2.1.1).
+  * Removed support for space seperators in log file
+  * Removed unused acconfig.h
+  * CVSROOT move of include/ files into source/
+
+ -- Ben Collins <bcollins@debian.org>  Mon,  7 Jun 1999 16:39:44 -0400
+
+sxid (3.2.5) unstable; urgency=low
+
+  * Added option to specify other than the default mail program,
+    feature request from David Walluck <david@anti-microsoft.org>
+  * Applied patch from Topi Miettinen <Topi.Miettinen@medialab.sonera.fi>
+    to make use of TMPDIR if set. closes: #36542
+
+ -- Ben Collins <bcollins@debian.org>  Fri, 16 Apr 1999 14:42:27 -0400
+
+sxid (3.2.4) unstable; urgency=low
+
+  * notify.c 'Ingore' -> 'Ignore'
+  * Minor code cleanups
+  * Changed delimiter in log file to 0x1e so that spaces in filenames
+    will remain intact. Still backward compatible with old space delimited
+    log files until 4.0 is released. closes: #35572
+
+ -- Ben Collins <bcollins@debian.org>  Tue, 30 Mar 1999 07:04:22 -0500
+
+sxid (3.2.3) unstable; urgency=low
+
+  * Added missing options to sxid(1) manpage header
+  * Made the cron.example show full path instead of just binary name
+  * Changed EMAIL to in sxid.conf.example to default to 'root' instead
+    root@localhost
+  * Implemented the IGNORE_DIR option which allows you to log only file
+    entries (and not directories) under specified paths (like if /home is
+    sgid). IGNORE_DIRS defaults to /home.
+  * Cleaned up some functions in search.c
+
+ -- Ben Collins <bcollins@debian.org>  Tue, 23 Mar 1999 07:28:26 -0500
+
+sxid (3.2.2) unstable; urgency=low
+
+  * Fixed version number this time
+  * Fixed spelling errors in sxid(1) manpage
+  * Fixed my CVS make script to include configure in the tarball
+
+ -- Ben Collins <bcollins@debian.org>  Mon, 22 Mar 1999 10:51:44 -0500
+
+sxid (3.2.1) unstable; urgency=low
+
+  * Added debian/conffile (forgot to cvs add)
+
+ -- Ben Collins <bcollins@debian.org>  Sun, 21 Mar 1999 19:49:24 -0500
+
+sxid (3.2.0) unstable; urgency=low
+
+  * Initial Debianization.
+  * Changed version from 'v3.x.x' format to '3.x.x'
+  * Now officially called just sXid (not sXid Secure). IMO, nothing is
+    truly secure and I don't want to mislead any one :)
+  * Added include for sys/types.h in structs.h for libc5 systems which
+    didn't define uid_t or gid_t in pwd.h/grp.h
+  * Moved all version references to configure for easier maintainence
+  * Changed some make stuff to work with debian build
+  * Updated copyrights for correct FSF address
+  * Modifed error/warning messages
+  * Did not exit on some errors (namely failure to get md5sum, and opening
+    log file), but continue with output
+  * Modified add_file_entry() to accept the entire stat struct as a param
+    instead of each seperate field
+  * Fixed problem where file inode changes (but not md5) were being
+    reported but not showing what changed (files will now report md5
+    changes and/or inode changes in output)
+  * Added #ifdef's to headers
+  * Added spotcheck functionality
+
+ -- Ben Collins <bcollins@debian.org>  Sat,  6 Mar 1999 14:48:18 -0500
+
+sxid (3.1.7) unstable; urgency=low
+
+  * Added include for limits.h to fix PATH_MAX in Solaris
+  * Replaced snprintf()'s with sprintf()'s since most were not neccesary
+    (known length) and the rest contained paths and could be safely guessed
+    using PATH_MAX (fixes compiles on some systems)
+  * Added #define for uint (needs to be in configure...)
+  * Removed typedef on conf_opt struct
+  * Added default define for uint
+  * Added default define for PATH_MAX if not defined
+  * Moved pwd.h and grp.h includes to structs.h
+  * Added include for string.h to stop compile warnings on some setup's
+  * Added (int) cast for mode_t which caused some compile warnings
+  * Fixed malloc's for octal mode_t so they didn't assume, but calculated
+    the size needed.
+  * Fixed some other malloc's using a more system independent calculation
+  * Fixed problem for digest and digest_hex in search_path() (Thanks to
+    Peter Sulecki <psulecki@ios.krakow.pl> for finding this one)
+  * Removed alot of malloc()'s in logging.c and reworked alot of the report
+    functions to be a little more efficient.
+  * Added checks for failed malloc()'s
+  * Fixed config options init to really recognize when a config option was
+    not present in the config file
+
+ -- Ben Collins <bcollins@debian.org>  Mon,  8 Feb 1999 00:00:00 -0500
+
+sxid (3.1.0) unstable; urgency=low
+
+  * Removed some malloc()'s in favor of strdup()'s
+  * Added LISTALL option in config file
+  * Added --nomail option for sending output to stdout
+  * Made it so the forbidden and no user/group match did not rotate log
+    file
+  * Made sxid.1's reference to /etc/sxid.conf depend on output from
+    configure
+  * Completed man pages for sxid and sxid.conf, also updated README
+  * Put define for CONF_FILE into config.h as opposed to Makefile
+
+ -- Ben Collins <bcollins@debian.org>  Mon,  1 Feb 1999 00:00:00 -0500
+
+sxid (3.0.0) unstable; urgency=low
+
+  * Rewrote entire program in C, this included built in md5sums and find
+    functions
+  * Made use of sxid.conf file for dynamic settings
+  * Added parameter for excluding directories
+  * Setup autoconf and autoheader for easy portability
+  * Reformatted email output
+
+ -- Ben Collins <bcollins@debian.org>  Fri,  1 Jan 1999 00:00:00 -0500
+
+sxid (2.0.1) unstable; urgency=low
+
+  * Inluded 2 sub's that were in my perl libs but not everyone elses :)
+
+ -- Ben Collins <bcollins@debian.org>  Fri,  2 Oct 1998 00:00:00 -0500
+   
+sxid (2.0.0) unstable; urgency=low
+
+  * Converted to a perl script to allow more features
+  * Added md5 checksum eval for files. Enables better tracking of file
+    changes. Directories are still checked via inode.
+  * Added checking for change in uid and gid of items
+  * Added checking of mode changes in files (regardless of if the +s
+    bits are the same). Helps to make sure the files you may have set for
+    special access remain that way.
+  * Added ability to designate certain directories as anti +s meaning  
+    that there should be no +s files in them (/home for example). Also
+    has the ability to -s those files if desired.
+  * Removed a few uneeded tmp files, now only creates two
+  * More readable output on emails
+  * Removed ANSI_TEXT since no mail clients (that I know of) support ansi
+  * Added checks for uid's and gid's that don't have a passwd or group
+    entry (ie. no matching name for the number)
+
+ -- Ben Collins <bcollins@debian.org>  Thu,  1 Oct 1998 00:00:00 -0500
+   
+sxid (1.2.0) unstable; urgency=low
+
+  * Switched to using a bash shell to incorporate $RANDOM (some
+    standard sh's don't have this)
+  * Added test before writing tmp files to avoid clobbering links, so
+    a world writable tmp (such as /tmp) can be used with out worry
+  * Added alot of comments for each section of code ;)
+
+ -- Ben Collins <bcollins@debian.org>  Wed,  1 Jul 1998 00:00:00 -0500
+   
+sxid (1.1.0) unstable; urgency=low
+
+  * Initial release
+
+ -- Ben Collins <bcollins@debian.org>  Wed, 17 Jun 1998 00:00:00 -0500
+
+Local variables:
+mode: debian-changelog
+add-log-mailing-address: "bcollins@debian.org"
+End:
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+SXID_OPTS=
+
+if [ -x /usr/bin/sxid ]; then
+	/usr/bin/sxid ${SXID_OPTS}
+fi
