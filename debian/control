@@ -1,7 +1,7 @@
 Source: sxid
 Section: admin
 Priority: extra
-Maintainer: Ben Collins <bcollins@debian.org>
+Maintainer: Timur Birsh <taem@linukz.org>
 Standards-Version: 3.8.3
 Build-Depends: debhelper (>= 7)
 Homepage: http://linukz.org/sxid.shtml
