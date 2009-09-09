@@ -114,7 +114,9 @@ A space seperated list of directories to search. Sxid will use these
 as a starting point for it's searches. Example:
 
 SEARCH = "/usr /bin /lib"
+.SH AUTHOR
+Ben Collins <bcollins@debian.org>
 .SH "REPORTING BUGS"
-Report bugs to <bcollins@debian.org>.
+Report bugs to current maintainer Timur Birsh <taem@linukz.org>.
 .SH "SEE ALSO"
 sxid(1)

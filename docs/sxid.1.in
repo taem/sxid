@@ -64,7 +64,9 @@ Useful when doing
 or
 .B --nomail
 to list all files that are logged, regardless of changes.
+.SH AUTHOR
+Ben Collins <bcollins@debian.org>
 .SH "REPORTING BUGS"
-Report bugs to Ben Collins <bcollins@debian.org>.
+Report bugs to current maintainer Timur Birsh <taem@linukz.org>.
 .SH "SEE ALSO"
 sxid.conf(5)
