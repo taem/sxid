@@ -1,8 +1,10 @@
-#####   LICENSE   #####
+Author: Ben Collins <bcollins@debian.org>
 
-sxid - suid, sgid file and directory checking
+The current Debian maintainer is Timur Birsh <taem@linukz.org>
 
-Copyright (C) 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
+Copyright:
+
+Copyright © 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
 
 This is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as
@@ -16,7 +18,11 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public
 License along with sxid; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-02111-1307  USA
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+02110-1301 USA.
 
-##### End LICENSE #####
+On Debian systems, the complete text of the GNU General Public
+License, version 2, can be found in /usr/share/common-licenses/GPL-2.
+
+The Debian packaging is © 2009, Timur Birsh <taem@linukz.org> and
+is licensed under the GPL v2 or greater, see above.
