@@ -98,7 +98,6 @@ NOTE: If you were using any version prior to 3.2.4 you need to archive and
 remove the old logs since they aren't compatible with this version and
 will cause improbable errors in the output.
 
-BUG reports ARE appreciated and encouraged, please send to Ben Collins
-<bcollins@debian.org>.
+Report bugs to current maintainer Timur Birsh <taem@linukz.org>.
 
 Latest version can be found at ftp://marcus.seva.net/pub/sxid
