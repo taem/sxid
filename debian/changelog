@@ -1,3 +1,37 @@
+sxid (4.1-1) unstable; urgency=low
+
+  * New upstream release:
+    - New maintainer.
+    - New homepage http://linukz.org/sxid.shtml.
+    - Fix Debian bug#412853 'sxid reports many false positive md5sums changes'.
+      Closes: #412853.
+  * debian/control:
+    - Bump Standards-Version to 3.8.3:
+      - Always provide debug symbols. Closes: #438079.
+      - Respect 'noopt' build flag.
+    - Add version to debhelper builddep.
+    - Add Homepage field.
+    - Add Vcs-Git and Vcs-Browser fields.
+    - In Depends replace 'mail-transport-agent' with
+      'exim4 | mail-transport-agent'. Closes: #495837.
+    - Add me as maintainer.
+  * debian/rules:
+    - Replace dh_clean -k with dh_prep.
+    - Fix DESTDIR.
+    - Install upstream NEWS file as changelog.
+    - Call 'make distclean' in clean target.
+  * debian/copyright:
+    - Mention current Debian maintainer.
+    - Add Debian packaging copyright.
+    - Update FSF address.
+    - Replace (c) with ©.
+    - Mention Author.
+    - Add download location.
+  * debian/compat: Set compatibility level to 7.
+  * New maintainer. Closes: #540896 (ITA).
+
+ -- Timur Birsh <taem@linukz.org>  Wed, 09 Sep 2009 15:59:54 +0600
+
 sxid (4.0.5-0.1) unstable; urgency=low
 
   * Non-maintainer upload.
