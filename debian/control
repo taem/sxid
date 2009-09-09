@@ -10,7 +10,7 @@ Vcs-Browser: http://gitorious.org/sxid/mainline/trees/deb
 
 Package: sxid
 Architecture: any
-Depends: ${shlibs:Depends}, mail-transport-agent
+Depends: ${shlibs:Depends}, exim4 | mail-transport-agent
 Description: suid, sgid file and directory checking
  This program runs as a cronjob. Basically it tracks any changes in
  your s[ug]id files and folders. If there are any new ones, ones that
