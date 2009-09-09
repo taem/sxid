@@ -232,6 +232,5 @@ sxid (1.1.0) unstable; urgency=low
 
 Local variables:
 mode: debian-changelog
-add-log-mailing-address: "bcollins@debian.org"
 End:
 
