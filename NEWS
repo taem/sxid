@@ -1,0 +1,9 @@
+sXid 4.1
+
+  * New maintainer.
+  * New homepage - http://linukz.org/sxid.shtml.
+  * Fix Debian bug#412853 'sxid reports many false positive md5sums changes'.
+    Thanks to Ari Johnson <iamtheari@gmail.com>.
+  * Update FSF address in copyright notice.
+
+ -- Timur Birsh <taem@linukz.org>  Wed, 09 Sep 2009 15:18:27 +0600
