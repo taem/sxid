@@ -5,6 +5,8 @@ Maintainer: Ben Collins <bcollins@debian.org>
 Standards-Version: 3.8.3
 Build-Depends: debhelper (>= 7)
 Homepage: http://linukz.org/sxid.shtml
+Vcs-Git: git://gitorious.org/sxid/mainline.git
+Vcs-Browser: http://gitorious.org/sxid/mainline/trees/deb
 
 Package: sxid
 Architecture: any
