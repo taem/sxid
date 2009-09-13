@@ -3,6 +3,7 @@
  * logging.c - logging functions
  *
  * Copyright (C) 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
+ * Copyright (C) 2009 Timur Birsh <taem@linukz.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -348,6 +349,7 @@ void init_file_entries (void)
 
 	if (p == NULL) {
 	    fprintf (stderr, "E: could not malloc() in init_file_entries()\n");
+	    fclose (log);
 	    exit (1);
 	}
 	p->next = global_log;
@@ -371,6 +373,7 @@ void init_file_entries (void)
 	p->flags = 0;
 	p->flags |= FE_OLD;
     }
+    fclose (log);
     return;
 }
 

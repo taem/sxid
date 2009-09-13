@@ -4,6 +4,7 @@
  *    the file_entry struct for changes
  *
  * Copyright (C) 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
+ * Copyright (C) 2009 Timur Birsh <taem@linukz.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -167,6 +168,7 @@ void start_search (void)
 		}
 	    }
 	    search_all = 0;
+	    fclose (list);
 	}
     }
     return;
