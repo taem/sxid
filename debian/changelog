@@ -1,10 +1,11 @@
-sxid (4.1-1) unstable; urgency=low
+sxid (4.2-1) unstable; urgency=low
 
   * New upstream release:
     - New maintainer.
     - New homepage http://linukz.org/sxid.shtml.
-    - Fix Debian bug#412853 'sxid reports many false positive md5sums changes'.
+    - Fixed Debian bug#412853 'sxid reports many false positive md5sums changes'.
       Closes: #412853.
+    - Fixed various resource leaks.
   * debian/control:
     - Bump Standards-Version to 3.8.3:
       - Always provide debug symbols. Closes: #438079.
@@ -23,14 +24,16 @@ sxid (4.1-1) unstable; urgency=low
   * debian/copyright:
     - Mention current Debian maintainer.
     - Add Debian packaging copyright.
+    - Add me to upstream copyright.
     - Update FSF address.
     - Replace (c) with ©.
     - Mention Author.
     - Add download location.
   * debian/compat: Set compatibility level to 7.
+  * Add debian/watch.
   * New maintainer. Closes: #540896 (ITA).
 
- -- Timur Birsh <taem@linukz.org>  Wed, 09 Sep 2009 15:59:54 +0600
+ -- Timur Birsh <taem@linukz.org>  Mon, 14 Sep 2009 21:20:21 +0600
 
 sxid (4.0.5-0.1) unstable; urgency=low
 
