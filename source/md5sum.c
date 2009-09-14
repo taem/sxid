@@ -14,6 +14,7 @@
  * This file is in the public domain.
  *
  * Modified for sXid by Ben Collins - Dec. 1998
+ * Modifications by Timur Birsh, Sep. 2009
  */
 
 #include <stdio.h>
@@ -50,15 +51,16 @@ int do_check (char *path, char *md5sum)
 {
     unsigned char chk_digest[16], file_digest[16];
     FILE *fp;
-    int i, d1, d2;
+    int i, d1, d2, r;
     char *p = md5sum;
 
     fp = fopen (path, "r");
     if (fp == NULL)
 	return 1;
-    if (mdfile (fp, file_digest))
-	return 2;
+    r = mdfile (fp, file_digest);
     fclose (fp);
+    if (r)
+	return 2;
     for (i = 0; i < 16; ++i) {
 	if ((d1 = hex_digit (*p++)) == -1)
 	    return 3;
