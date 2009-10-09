@@ -3,8 +3,8 @@ sxid (4.2-1) unstable; urgency=low
   * New upstream release:
     - New maintainer.
     - New homepage http://linukz.org/sxid.shtml.
-    - Fixed Debian bug#412853 'sxid reports many false positive md5sums changes'.
-      Closes: #412853.
+    - Fixed Debian bug#412853 'sxid reports many false positive
+      md5sums changes'. Closes: #412853.
     - Fixed various resource leaks.
   * debian/control:
     - Bump Standards-Version to 3.8.3:
