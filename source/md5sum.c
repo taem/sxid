@@ -23,50 +23,50 @@
 #include "sxid.h"
 #include "md5.h"
 
-int mdfile (FILE * fp, unsigned char *digest)
+int mdfile(FILE * fp, unsigned char *digest)
 {
-    unsigned char buf[1024];
-    struct MD5Context ctx;
-    int n;
+	unsigned char buf[1024];
+	struct MD5Context ctx;
+	int n;
 
-    MD5Init (&ctx);
-    while ((n = fread (buf, 1, sizeof (buf), fp)) > 0)
-	MD5Update (&ctx, buf, n);
-    MD5Final (digest, &ctx);
-    if (ferror (fp))
+	MD5Init(&ctx);
+	while ((n = fread(buf, 1, sizeof(buf), fp)) > 0)
+		MD5Update(&ctx, buf, n);
+	MD5Final(digest, &ctx);
+	if (ferror(fp))
+		return -1;
+	return 0;
+}
+
+int hex_digit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return c - '0';
+	if (c >= 'a' && c <= 'f')
+		return c - 'a' + 10;
 	return -1;
-    return 0;
 }
 
-int hex_digit (int c)
+int do_check(char *path, char *md5sum)
 {
-    if (c >= '0' && c <= '9')
-	return c - '0';
-    if (c >= 'a' && c <= 'f')
-	return c - 'a' + 10;
-    return -1;
-}
+	unsigned char chk_digest[16], file_digest[16];
+	FILE *fp;
+	int i, d1, d2, r;
+	char *p = md5sum;
 
-int do_check (char *path, char *md5sum)
-{
-    unsigned char chk_digest[16], file_digest[16];
-    FILE *fp;
-    int i, d1, d2, r;
-    char *p = md5sum;
-
-    fp = fopen (path, "r");
-    if (fp == NULL)
-	return 1;
-    r = mdfile (fp, file_digest);
-    fclose (fp);
-    if (r)
-	return 2;
-    for (i = 0; i < 16; ++i) {
-	if ((d1 = hex_digit (*p++)) == -1)
-	    return 3;
-	if ((d2 = hex_digit (*p++)) == -1)
-	    return 4;
-	chk_digest[i] = (d1 * 16) + d2;
-    }
-    return memcmp (chk_digest, file_digest, 16);
+	fp = fopen(path, "r");
+	if (fp == NULL)
+		return 1;
+	r = mdfile(fp, file_digest);
+	fclose(fp);
+	if (r)
+		return 2;
+	for (i = 0; i < 16; ++i) {
+		if ((d1 = hex_digit(*p++)) == -1)
+			return 3;
+		if ((d2 = hex_digit(*p++)) == -1)
+			return 4;
+		chk_digest[i] = (d1 * 16) + d2;
+	}
+	return memcmp(chk_digest, file_digest, 16);
 }
