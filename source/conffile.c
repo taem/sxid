@@ -47,8 +47,8 @@ static void get_value(char *key, char *value, int required)
 	} else {
 		while ((fgets(buffer, sizeof(buffer), conffile)) != NULL) {
 			if (buffer[0] != '#') {
-				if (strstr(buffer, key) != (char)NULL) {
-					if (strstr(buffer, "\"") == (char)NULL) {
+				if (strstr(buffer, key) != (char *)NULL) {
+					if (strstr(buffer, "\"") == (char *)NULL) {
 						fprintf(stderr,
 							"E: in \'%s\', line %d.\n",
 							confname, line_no);
