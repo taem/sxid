@@ -58,7 +58,7 @@ void sxid_usage(char *prog_name)
 		"regardless of changes\n");
 	fprintf(stdout, "-c, --config <file>     Specifies alternative config "
 		"file\n");
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 int main(int argc, char *argv[])
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 	if ((conffile = fopen(confname, "r")) == NULL) {
 		fprintf(stderr, "E: failed to open configuration file %s\n",
 			confname);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	fclose(conffile);
 

@@ -85,7 +85,7 @@ void notify_email(void)
 			nomail ? "stdout" : config_options.mail_prog);
 		if (!nomail)
 			fclose(mail_file);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 #ifndef CL_SUBJ
 	if (!nomail)

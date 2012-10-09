@@ -43,7 +43,7 @@ static void get_value(char *key, char *value, int required)
 
 	if ((conffile = fopen(confname, "r")) == NULL) {
 		fprintf(stderr, "E: error opening config file, %s.\n", confname);
-		exit(1);
+		exit(EXIT_FAILURE);
 	} else {
 		while ((fgets(buffer, sizeof(buffer), conffile)) != NULL) {
 			if (buffer[0] != '#') {
@@ -53,7 +53,7 @@ static void get_value(char *key, char *value, int required)
 							"E: in \'%s\', line %d.\n",
 							confname, line_no);
 						fclose(conffile);
-						exit(1);
+						exit(EXIT_FAILURE);
 					}
 					strncpy(buffer, strstr(buffer, "\"") + 1,
 						MAXBUF);
@@ -82,7 +82,7 @@ static void get_value(char *key, char *value, int required)
 			fprintf(stderr,
 				"E: required option \'%s\' not found in \'%s\'.\n",
 				key, confname);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		return;
 	}
@@ -105,7 +105,7 @@ void init_conf(void)
 		if (getcwd(config_options.search_paths, MAXBUF) == NULL) {
 			fprintf(stderr, "E: current working directory path is "
 				"too long\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		nomail = 1;
 	} else

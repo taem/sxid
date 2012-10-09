@@ -49,7 +49,7 @@ static char *fill_space(int count)
 	p = (char*)malloc(count + 1);
 	if (p == NULL) {
 		fprintf(stderr, "E: could not malloc() in fill_space()\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	memset(p, ' ', count);
 	p[count] = '\0';
@@ -65,7 +65,7 @@ static char *format_ugid(uid_t uid, gid_t gid, mode_t mode)
 	ret_val = temp = (char*)malloc((NAME_MAX * 2) + 2);
 	if (ret_val == NULL) {
 		fprintf(stderr, "E: could not malloc() in format_ugid()\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (mode & S_ISUID)
 		temp++[0] = '*';
@@ -95,7 +95,7 @@ static char *super_format_ugid(struct file_entry *p)
 	ret_val = temp = (char*)malloc((NAME_MAX * 4) + 6);
 	if (ret_val == NULL) {
 		fprintf(stderr, "E: could not malloc() in super_format_ugid()\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (p->flags & FE_CHUSER) {
 		pw = getpwuid(p->old_uid);
@@ -344,7 +344,7 @@ void init_file_entries(void)
 			fprintf(stderr, "E: could not malloc() in "
 				"init_file_entries()\n");
 			fclose(log);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		p->next = global_log;
 		global_log = p;
@@ -383,7 +383,7 @@ void compare_output(void)
 	tmp_file = malloc(strlen(tmp_dir) + strlen("/sxid.XXXXXX") + 1);
 	if (tmp_file == NULL) {
 		fprintf(stderr, "E: could not malloc() in compare_output().\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	strcpy(tmp_file, tmp_dir);
 	strcat(tmp_file, "/sxid.XXXXXX");
@@ -395,7 +395,7 @@ void compare_output(void)
 	if (mail_file == NULL) {
 		fprintf(stderr,
 			"E: could not open temp file in compare_output().\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	check_add_rem(mail_file);
 	check_attr(mail_file);
@@ -423,7 +423,7 @@ struct file_entry *get_fe_bypath(char *path)
 
 	if (p == NULL) {
 		fprintf(stderr, "E: could malloc() in get_fe_bypath()\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	p->next = global_log;
 	p->path = NULL;

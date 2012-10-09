@@ -156,7 +156,7 @@ void start_search(void)
 		if ((list = fopen(config_options.extra_list, "r")) == NULL) {
 			fprintf(stderr, "E: error opening config file, %s.\n",
 				config_options.extra_list);
-			exit(1);
+			exit(EXIT_FAILURE);
 		} else {
 			struct stat dirent_stat;
 			search_all = 1;
