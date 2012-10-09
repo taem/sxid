@@ -1,0 +1,9 @@
+config.cache
+config.log
+config.status
+docs/sxid.1
+docs/sxid.conf.5
+source/config.h
+source/Makefile
+source/sxid
+*.o
