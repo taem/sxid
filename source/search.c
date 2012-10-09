@@ -151,7 +151,7 @@ void start_search(void)
 		FILE *list;
 		char b[MAXBUF];
 
-		bzero(b, sizeof(b));
+		memset(b, 0, sizeof(b));
 
 		if ((list = fopen(config_options.extra_list, "r")) == NULL) {
 			fprintf(stderr, "E: error opening config file, %s.\n",

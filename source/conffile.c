@@ -39,7 +39,7 @@ static void get_value(char *key, char *value, int required)
 	int count = 0;
 	int line_no = 0;
 
-	bzero(buffer, sizeof(buffer));
+	memset(buffer, 0, sizeof(buffer));
 
 	if ((conffile = fopen(confname, "r")) == NULL) {
 		fprintf(stderr, "E: error opening config file, %s.\n", confname);
