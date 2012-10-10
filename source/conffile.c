@@ -37,7 +37,6 @@ static void get_value(char *key, char *value, int required)
 {
 	FILE *conffile;
 	char buffer[MAXBUF];
-	int count = 0;
 	int line_no = 0;
 
 	memset(buffer, 0, sizeof(buffer));
@@ -62,7 +61,7 @@ static void get_value(char *key, char *value, int required)
 		strncpy(buffer, strstr(buffer, "\"") + 1, MAXBUF);
 		buffer[MAXBUF - 1] = '\0';
 
-		count = 0;
+		int count = 0;
 		while (count < sizeof(buffer)) {
 			if ((isprint(buffer[count])) &&	buffer[count] != '"')
 				value[count] = buffer[count];
