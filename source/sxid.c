@@ -64,14 +64,14 @@ void sxid_usage(char *prog_name)
 int main(int argc, char *argv[])
 {
 	FILE *conffile;
-	int opt, optindex = 0;
+	int opt;
 	time_t time_mark;
 
 	umask(077);
 	config_options.flags = 0x00;
 
 	while ((opt = getopt_long_only(argc, argv, "nhlkc:", cmd_options,
-						&optindex)) != EOF) {
+						NULL)) != EOF) {
 		switch (opt) {
 		case 'c':
 			confname = optarg;
