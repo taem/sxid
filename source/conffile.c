@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h> /* strerror() */
 #include <errno.h>
 #include <ctype.h>
 
@@ -92,18 +93,17 @@ void init_conf(void)
 	char value[MAXBUF];
 
 	/* Set defaults */
-	strcpy((char*)config_options.exclude_paths, "");
-	strcpy((char*)config_options.email, "root");
-	strcpy((char*)config_options.forbidden_paths, "");
-	strcpy((char*)config_options.ignore_dirs, "");
+	strcpy((char*) config_options.exclude_paths, "");
+	strcpy((char*) config_options.email, "root");
+	strcpy((char*) config_options.forbidden_paths, "");
+	strcpy((char*) config_options.ignore_dirs, "");
 	config_options.extra_list[0] = '\0';
-	strcpy((char*)config_options.mail_prog, MAIL_PROG);
+	strcpy((char*) config_options.mail_prog, MAIL_PROG);
 	config_options.keep_logs = 3;
 
 	if (config_options.flags & FLAG_SPOT) {
 		if (getcwd(config_options.search_paths, MAXBUF) == NULL) {
-			fprintf(stderr, "E: current working directory path is "
-				"too long\n");
+			fprintf(stderr, "E: %s\n", strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 		nomail = 1;
