@@ -22,6 +22,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> /* access() */
+#include <string.h> /* strerror() */
+#include <errno.h>
 #include <time.h>
 #include <getopt.h>
 
@@ -92,12 +95,10 @@ int main(int argc, char *argv[])
 	argc -= optind;
 	argv += optind;
 
-	if ((conffile = fopen(confname, "r")) == NULL) {
-		fprintf(stderr, "E: failed to open configuration file %s\n",
-			confname);
+	if (access(confname, R_OK) != 0) {
+		fprintf(stderr, "E: %s: %s\n", strerror(errno), confname);
 		exit(EXIT_FAILURE);
 	}
-	fclose(conffile);
 
 	/* Ok, let's time stamp */
 	time_mark = time(NULL);
