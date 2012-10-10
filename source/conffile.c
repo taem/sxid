@@ -89,7 +89,7 @@ static void get_value(char *key, char *value, int required)
 
 void init_conf(void)
 {
-	char temp[MAXBUF];
+	char value[MAXBUF];
 
 	/* Set defaults */
 	strcpy((char*)config_options.exclude_paths, "");
@@ -118,23 +118,23 @@ void init_conf(void)
 	get_value("EXTRA_LIST", config_options.extra_list, 0);
 	get_value("FORBIDDEN", config_options.forbidden_paths, 0);
 
-	get_value("KEEP_LOGS", temp, 0);
-	config_options.keep_logs = atoi(temp);
+	get_value("KEEP_LOGS", value, 0);
+	config_options.keep_logs = atoi(value);
 
-	get_value("ALWAYS_NOTIFY", temp, 0);
-	if (isyes(temp))
+	get_value("ALWAYS_NOTIFY", value, 0);
+	if (isyes(value))
 		config_options.flags |= FLAG_ANOT;
 
-	get_value("ALWAYS_ROTATE", temp, 0);
-	if (isyes(temp))
+	get_value("ALWAYS_ROTATE", value, 0);
+	if (isyes(value))
 		config_options.flags |= FLAG_AROT;
 
-	get_value("ENFORCE", temp, 0);
-	if (isyes(temp))
+	get_value("ENFORCE", value, 0);
+	if (isyes(value))
 		config_options.flags |= FLAG_EFOR;
 
-	get_value("LISTALL", temp, 0);
-	if (isyes(temp))
+	get_value("LISTALL", value, 0);
+	if (isyes(value))
 		config_options.flags |= FLAG_LALL;
 
 	return;
