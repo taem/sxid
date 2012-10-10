@@ -44,48 +44,47 @@ static void get_value(char *key, char *value, int required)
 	if ((conffile = fopen(confname, "r")) == NULL) {
 		fprintf(stderr, "E: error opening config file, %s.\n", confname);
 		exit(EXIT_FAILURE);
-	} else {
-		while ((fgets(buffer, sizeof(buffer), conffile)) != NULL) {
-			if (buffer[0] != '#') {
-				if (strstr(buffer, key) != (char *)NULL) {
-					if (strstr(buffer, "\"") == (char *)NULL) {
-						fprintf(stderr,
-							"E: in \'%s\', line %d.\n",
-							confname, line_no);
-						fclose(conffile);
-						exit(EXIT_FAILURE);
-					}
-					strncpy(buffer, strstr(buffer, "\"") + 1,
-						MAXBUF);
-					buffer[MAXBUF - 1] = '\0';
+	}
 
-					count = 0;
-					while (count < sizeof(buffer)) {
-						if ((isprint(buffer[count])) &&
-							buffer[count] != '"')
-							value[count] = buffer[count];
-						else {
-							value[count] = '\0';
-							break;
-						}
-						count++;
-					}
-					value[sizeof(buffer) - 1] = '\0';
-					fclose(conffile);
-					return;
-				}
-			}
-			line_no++;
-		}
-		fclose(conffile);
-		if (required) {
-			fprintf(stderr,
-				"E: required option \'%s\' not found in \'%s\'.\n",
-				key, confname);
+	while ((fgets(buffer, sizeof(buffer), conffile)) != NULL) {
+		line_no++;
+		if (buffer[0] == '#')
+			continue;
+		if (strstr(buffer, key) == (char *)NULL)
+			continue;
+		if (strstr(buffer, "\"") == (char *)NULL) {
+			fprintf(stderr, "E: in \'%s\', line %d.\n", confname,
+				line_no);
+			fclose(conffile);
 			exit(EXIT_FAILURE);
 		}
+		strncpy(buffer, strstr(buffer, "\"") + 1, MAXBUF);
+		buffer[MAXBUF - 1] = '\0';
+
+		count = 0;
+		while (count < sizeof(buffer)) {
+			if ((isprint(buffer[count])) &&	buffer[count] != '"')
+				value[count] = buffer[count];
+			else {
+				value[count] = '\0';
+				break;
+			}
+			count++;
+		}
+		value[sizeof(buffer) - 1] = '\0';
+		fclose(conffile);
 		return;
 	}
+	fclose(conffile);
+
+	if (required) {
+		fprintf(stderr,
+			"E: required option \'%s\' not found in \'%s\'.\n",
+			key, confname);
+		exit(EXIT_FAILURE);
+	}
+
+	return;
 }
 
 void init_conf(void)
