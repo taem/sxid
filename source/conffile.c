@@ -33,7 +33,7 @@ struct config_opt config_options;
 static char conf_default[] = CONF_FILE;
 char *confname = conf_default;
 
-static void get_value(char *key, char *value, int required)
+static void get_value(char *value, char *key, int required)
 {
 	FILE *conffile;
 	char buffer[MAXBUF];
@@ -107,32 +107,32 @@ void init_conf(void)
 		}
 		nomail = 1;
 	} else
-		get_value("SEARCH", config_options.search_paths, 1);
+		get_value(config_options.search_paths, "SEARCH", 1);
 
-	get_value("EMAIL", config_options.email, 0);
-	get_value("EXCLUDE", config_options.exclude_paths, 0);
-	get_value("IGNORE_DIRS", config_options.ignore_dirs, 0);
-	get_value("LOG_FILE", config_options.log_file, 1);
-	get_value("MAIL_PROG", config_options.mail_prog, 0);
-	get_value("EXTRA_LIST", config_options.extra_list, 0);
-	get_value("FORBIDDEN", config_options.forbidden_paths, 0);
+	get_value(config_options.email, "EMAIL", 0);
+	get_value(config_options.exclude_paths, "EXCLUDE", 0);
+	get_value(config_options.ignore_dirs, "IGNORE_DIRS", 0);
+	get_value(config_options.log_file, "LOG_FILE", 1);
+	get_value(config_options.mail_prog, "MAIL_PROG", 0);
+	get_value(config_options.extra_list, "EXTRA_LIST", 0);
+	get_value(config_options.forbidden_paths, "FORBIDDEN", 0);
 
-	get_value("KEEP_LOGS", value, 0);
+	get_value(value, "KEEP_LOGS", 0);
 	config_options.keep_logs = atoi(value);
 
-	get_value("ALWAYS_NOTIFY", value, 0);
+	get_value(value, "ALWAYS_NOTIFY", 0);
 	if (isyes(value))
 		config_options.flags |= FLAG_ANOT;
 
-	get_value("ALWAYS_ROTATE", value, 0);
+	get_value(value, "ALWAYS_ROTATE", 0);
 	if (isyes(value))
 		config_options.flags |= FLAG_AROT;
 
-	get_value("ENFORCE", value, 0);
+	get_value(value, "ENFORCE", 0);
 	if (isyes(value))
 		config_options.flags |= FLAG_EFOR;
 
-	get_value("LISTALL", value, 0);
+	get_value(value, "LISTALL", 0);
 	if (isyes(value))
 		config_options.flags |= FLAG_LALL;
 
