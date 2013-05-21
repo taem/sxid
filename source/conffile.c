@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h> /* strerror() */
 #include <errno.h>
 #include <ctype.h>
 
@@ -32,106 +33,108 @@ struct config_opt config_options;
 static char conf_default[] = CONF_FILE;
 char *confname = conf_default;
 
-static
-void get_value (char *key, char *value, int required)
+static void get_value(char *value, char *key, int required)
 {
-    FILE *conffile;
-    char buffer[MAXBUF];
-    int count = 0;
-    int line_no = 0;
+	FILE *conffile;
+	char buffer[MAXBUF];
+	int line_no = 0;
 
-    bzero (buffer, sizeof (buffer));
+	memset(buffer, 0, sizeof(buffer));
 
-    if ((conffile = fopen (confname, "r")) == NULL) {
-	fprintf (stderr, "E: error opening config file, %s.\n", confname);
-	exit (1);
-    } else {
-	while ((fgets (buffer, sizeof (buffer), conffile)) != NULL) {
-	    if (buffer[0] != '#') {
-		if (strstr (buffer, key) != (char) NULL) {
-		    if (strstr (buffer, "\"") == (char) NULL) {
-			fprintf (stderr, "E: in \'%s\', line %d.\n", confname, line_no);
-			fclose (conffile);
-			exit (1);
-		    }
-		    strncpy (buffer, strstr (buffer, "\"") + 1, MAXBUF);
-		    buffer[MAXBUF - 1] = '\0';
+	if ((conffile = fopen(confname, "r")) == NULL) {
+		fprintf(stderr, "E: error opening config file, %s.\n", confname);
+		exit(EXIT_FAILURE);
+	}
 
-		    count = 0;
-		    while (count < sizeof (buffer)) {
-			if ((isprint (buffer[count])) && buffer[count] != '"')
-			    value[count] = buffer[count];
+	while ((fgets(buffer, sizeof(buffer), conffile)) != NULL) {
+		line_no++;
+		if (buffer[0] == '#')
+			continue;
+		if (strstr(buffer, key) == (char *)NULL)
+			continue;
+		if (strstr(buffer, "\"") == (char *)NULL) {
+			fprintf(stderr, "E: in \'%s\', line %d.\n", confname,
+				line_no);
+			fclose(conffile);
+			exit(EXIT_FAILURE);
+		}
+		strncpy(buffer, strstr(buffer, "\"") + 1, MAXBUF);
+		buffer[MAXBUF - 1] = '\0';
+
+		int count = 0;
+		while (count < sizeof(buffer)) {
+			if ((isprint(buffer[count])) &&	buffer[count] != '"')
+				value[count] = buffer[count];
 			else {
-			    value[count] = '\0';
-			    break;
+				value[count] = '\0';
+				break;
 			}
 			count++;
-		    }
-		    value[sizeof (buffer) - 1] = '\0';
-		    fclose (conffile);
-		    return;
 		}
-	    }
-	    line_no++;
+		value[sizeof(buffer) - 1] = '\0';
+		fclose(conffile);
+		return;
 	}
-	fclose (conffile);
+	fclose(conffile);
+
 	if (required) {
-	    fprintf (stderr, "E: required option \'%s\' not found in \'%s\'.\n",
-		key, confname);
-	    exit (1);
+		fprintf(stderr,
+			"E: required option \'%s\' not found in \'%s\'.\n",
+			key, confname);
+		exit(EXIT_FAILURE);
 	}
+
 	return;
-    }
 }
 
-void init_conf (void)
+void init_conf(void)
 {
-    char temp[MAXBUF];
+	char value[MAXBUF];
 
-    /* Set defaults */
-    strcpy ((char *) config_options.exclude_paths, "");
-    strcpy ((char *) config_options.email, "root");
-    strcpy ((char *) config_options.forbidden_paths, "");
-    strcpy ((char *) config_options.ignore_dirs, "");
-    config_options.extra_list[0] = '\0';
-    strcpy ((char *) config_options.mail_prog, MAIL_PROG);
-    config_options.keep_logs = 3;
+	/* Set defaults */
+	strcpy((char*) config_options.exclude_paths, "");
+	strcpy((char*) config_options.email, "root");
+	strcpy((char*) config_options.forbidden_paths, "");
+	strcpy((char*) config_options.ignore_dirs, "");
+	config_options.extra_list[0] = '\0';
+	strcpy((char*) config_options.mail_prog, MAIL_PROG);
+	config_options.keep_logs = 3;
 
-    if (config_options.flags & FLAG_SPOT) {
-	if(getcwd(config_options.search_paths, MAXBUF) == NULL) {
-	    fprintf(stderr, "E: current working directory path is too long\n");
-	    exit (1);
-	}
-	nomail = 1;
-    } else
-	get_value ("SEARCH", config_options.search_paths, 1);
+	if (config_options.flags & FLAG_SPOT) {
+		if (getcwd(config_options.search_paths, MAXBUF) == NULL) {
+			fprintf(stderr, "E: %s\n", strerror(errno));
+			exit(EXIT_FAILURE);
+		}
+		nomail = 1;
+	} else
+		get_value(config_options.search_paths, "SEARCH", 1);
 
-    get_value ("EMAIL", config_options.email, 0);
-    get_value ("EXCLUDE", config_options.exclude_paths, 0);
-    get_value ("IGNORE_DIRS", config_options.ignore_dirs, 0);
-    get_value ("LOG_FILE", config_options.log_file, 1);
-    get_value ("MAIL_PROG", config_options.mail_prog, 0);
-    get_value ("EXTRA_LIST", config_options.extra_list, 0);
-    get_value ("FORBIDDEN", config_options.forbidden_paths, 0);
+	get_value(config_options.email, "EMAIL", 0);
+	get_value(config_options.exclude_paths, "EXCLUDE", 0);
+	get_value(config_options.ignore_dirs, "IGNORE_DIRS", 0);
+	get_value(config_options.log_file, "LOG_FILE", 1);
+	get_value(config_options.mail_prog, "MAIL_PROG", 0);
+	get_value(config_options.extra_list, "EXTRA_LIST", 0);
+	get_value(config_options.forbidden_paths, "FORBIDDEN", 0);
 
-    get_value ("KEEP_LOGS", temp, 0);
-    config_options.keep_logs = atoi (temp);
+	get_value(value, "KEEP_LOGS", 0);
+	config_options.keep_logs = atoi(value);
 
-    get_value ("ALWAYS_NOTIFY", temp, 0);
-    if (isyes (temp))
-	config_options.flags |= FLAG_ANOT;
+	get_value(value, "ALWAYS_NOTIFY", 0);
+	if (isyes(value))
+		config_options.flags |= FLAG_ANOT;
 
-    get_value ("ALWAYS_ROTATE", temp, 0);
-    if (isyes (temp))
-	config_options.flags |= FLAG_AROT;
+	get_value(value, "ALWAYS_ROTATE", 0);
+	if (isyes(value))
+		config_options.flags |= FLAG_AROT;
 
-    get_value ("ENFORCE", temp, 0);
-    if (isyes (temp))
-	config_options.flags |= FLAG_EFOR;
+	get_value(value, "ENFORCE", 0);
+	if (isyes(value))
+		config_options.flags |= FLAG_EFOR;
 
-    get_value ("LISTALL", temp, 0);
-    if (isyes (temp))
-	config_options.flags |= FLAG_LALL;
+	get_value(value, "LISTALL", 0);
+	if (isyes(value))
+		config_options.flags |= FLAG_LALL;
 
-    return;
+	return;
 }

@@ -104,7 +104,7 @@ rotated log being suffixed with a digit. The directories must already exist.
 This is usually /var/log/sxid.log. Rotated logs would look like /var/log/sxid.log.n
 where 'n' is the number in the rotation. The current log has no suffix.
 .TP
-\fMAIL_PROG\fR
+\fBMAIL_PROG\fR
 Mail program. This changes the default compiled in mailer for reports. You
 only need this if you have changed it's location and don't want to
 recompile sxid.

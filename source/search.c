@@ -35,185 +35,190 @@
  */
 static int search_all = 0;
 
-static
-int excluded (char *dir)
+static int excluded(char *dir)
 {
-    char *tok, *e, *p;
+	char *tok, *e, *p;
 
-    e = strdup (config_options.exclude_paths);
+	e = strdup(config_options.exclude_paths);
 
-    tok = strtok_r (e, " ", &p);
-    while (tok != NULL) {
-	if (!strcmp (tok, dir)) {
-	    free(e);
-	    return 1;
+	tok = strtok_r(e, " ", &p);
+	while (tok != NULL) {
+		if (!strcmp(tok, dir)) {
+			free(e);
+			return 1;
+		}
+		tok = strtok_r(NULL, " ", &p);
 	}
-	tok = strtok_r (NULL, " ", &p);
-    }
 
-    free(e);
-    return 0;
+	free(e);
+	return 0;
 }
 
-static __inline__ void check_entry (struct dirent *, char *);
+static __inline__ void check_entry(struct dirent *, char *);
 
-void search_path (char *dir)
+void search_path(char *dir)
 {
-    DIR *dir_list;
-    struct dirent *dir_entry;
+	DIR *dir_list;
+	struct dirent *dir_entry;
 
-    dir_list = opendir (dir);
-    if (dir_list == NULL)
+	dir_list = opendir(dir);
+	if (dir_list == NULL)
+		return;
+
+	for (dir_entry = readdir(dir_list);
+	     dir_entry != NULL;
+	     dir_entry = readdir(dir_list))
+		check_entry(dir_entry, dir);
+
+	closedir(dir_list);
 	return;
-
-    for (dir_entry = readdir (dir_list); dir_entry != NULL; dir_entry = readdir (dir_list))
-	check_entry(dir_entry, dir);
-
-    closedir (dir_list);
-    return;
 }
 
-static __inline__
-void check_entry (struct dirent *dir_entry, char *dir)
+static __inline__ void check_entry(struct dirent *dir_entry, char *dir)
 {
-    char buf[PATH_MAX];
-    struct stat dirent_stat;
+	char buf[PATH_MAX];
+	struct stat dirent_stat;
 
-    if (dir_entry == NULL || (strcmp (dir_entry->d_name, "..") &&
-	    strcmp (dir_entry->d_name, "."))) {
-	if (dir_entry != NULL)
-	    snprintf (buf, sizeof(buf), "%s%s%s", dir, strlen (dir) == 1 ? "" : "/",
-		dir_entry->d_name);
-	else
-	    snprintf (buf, sizeof(buf), "%s", dir);
+	if (dir_entry == NULL || (strcmp(dir_entry->d_name, "..") &&
+				  strcmp(dir_entry->d_name, "."))) {
+		if (dir_entry != NULL)
+			snprintf(buf, sizeof(buf), "%s%s%s", dir,
+				 strlen(dir) == 1 ? "" : "/",
+				 dir_entry->d_name);
+		else
+			snprintf(buf, sizeof(buf), "%s", dir);
 
-	lstat (buf, &dirent_stat);
+		lstat(buf, &dirent_stat);
 
-	if (dirent_stat.st_mode & S_IFDIR) {
-	    if ((dirent_stat.st_mode & (S_ISUID | S_ISGID)) &&
-		    !check_paths(buf, config_options.ignore_dirs))
-		add_file_entry (buf, dirent_stat, NULL);
-	    if (!excluded (buf))
-		search_path (buf);
-	} else {
-	    if (dirent_stat.st_mode & S_IFREG &&
-		(dirent_stat.st_mode & (S_ISUID | S_ISGID) || search_all)) {
-		FILE *fp = NULL;
-		unsigned char digest[16 + 1];
-		int i;
-		char digest_hex[(16 * 2) + 1], *p;
+		if (dirent_stat.st_mode & S_IFDIR) {
+			if ((dirent_stat.st_mode & (S_ISUID | S_ISGID)) &&
+			    !check_paths(buf, config_options.ignore_dirs))
+				add_file_entry(buf, dirent_stat, NULL);
+			if (!excluded(buf))
+				search_path(buf);
+		} else {
+			if (dirent_stat.st_mode & S_IFREG &&
+				(dirent_stat.st_mode &
+					(S_ISUID | S_ISGID) || search_all)) {
+				FILE *fp = NULL;
+				unsigned char digest[16 + 1];
+				int i;
+				char digest_hex[(16 * 2) + 1], *p;
 
-		fp = fopen (buf, "r");
-		if (fp == NULL) {
-		    fprintf (stderr, "W: opening %s for md5 read\n", buf);
-		    return;
+				fp = fopen(buf, "r");
+				if (fp == NULL) {
+					fprintf(stderr, "W: opening %s for md5 "
+						"read\n", buf);
+					return;
+				}
+				if (mdfile(fp, digest)) {
+					fprintf(stderr, "W: reading %s for md5\n",
+						buf);
+					return;
+				}
+				fclose(fp);
+
+				for (i = 0, p = digest_hex; i < 16; ++i)
+					p += sprintf(p, "%02x", digest[i]);
+
+				add_file_entry(buf, dirent_stat, digest_hex);
+			}
 		}
-		if (mdfile (fp, digest)) {
-		    fprintf (stderr, "W: reading %s for md5\n", buf);
-		    return;
-		}
-		fclose (fp);
-
-		for (i = 0, p = digest_hex; i < 16; ++i)
-		    p += sprintf (p, "%02x", digest[i]);
-
-		add_file_entry (buf, dirent_stat, digest_hex);
-	    }
 	}
-    }
-    return;
+	return;
 }
 
-void start_search (void)
+void start_search(void)
 {
-    char *tok, *s;
+	char *tok, *s;
 
-    /* First the selected paths */
-    s = strdup (config_options.search_paths);
-    for (tok = strtok (s, " "); tok != NULL ; tok = strtok (NULL, " "))
-	if (!excluded (tok))
-	    search_path(tok);
-    free (s);
+	/* First the selected paths */
+	s = strdup(config_options.search_paths);
+	for (tok = strtok(s, " "); tok != NULL; tok = strtok(NULL, " "))
+		if (!excluded(tok))
+			search_path(tok);
+	free(s);
 
-    /* Now the forbidden paths get explicit recursion */
-    s = strdup (config_options.forbidden_paths);
-    for (tok = strtok (s, " "); tok != NULL ; tok = strtok (NULL, " "))
-	if (!check_paths (tok, config_options.search_paths))
-	    search_path(tok);
-    free (s);
+	/* Now the forbidden paths get explicit recursion */
+	s = strdup(config_options.forbidden_paths);
+	for (tok = strtok(s, " "); tok != NULL; tok = strtok(NULL, " "))
+		if (!check_paths(tok, config_options.search_paths))
+			search_path(tok);
+	free(s);
 
-    /* Finally we check each line in extra_list */
-    if (config_options.extra_list[0] != '\0') {
-	FILE *list;
-	char b[MAXBUF];
+	/* Finally we check each line in extra_list */
+	if (config_options.extra_list[0] != '\0') {
+		FILE *list;
+		char b[MAXBUF];
 
-	bzero (b, sizeof (b));
+		memset(b, 0, sizeof(b));
 
-	if ((list = fopen (config_options.extra_list, "r")) == NULL) {
-	    fprintf (stderr, "E: error opening config file, %s.\n",
-		config_options.extra_list);
-	    exit(1);
-	} else {
-	    struct stat dirent_stat;
-	    search_all = 1;
-	    while ((fgets (b, sizeof (b), list)) != NULL) {
-		if (b[0] == '/') { /* make sure it's a full path */
-		    if (b[strlen(b)-1] == '\n')
-			b[strlen(b)-1] = '\0'; /* get rid of \n */
-		    stat (b, &dirent_stat);
-		    if (dirent_stat.st_mode & S_IFREG)
-			check_entry(NULL, b);
-		    else if (dirent_stat.st_mode & S_IFDIR)
-			search_path(b);
+		if ((list = fopen(config_options.extra_list, "r")) == NULL) {
+			fprintf(stderr, "E: error opening config file, %s.\n",
+				config_options.extra_list);
+			exit(EXIT_FAILURE);
+		} else {
+			struct stat dirent_stat;
+			search_all = 1;
+			while ((fgets(b, sizeof(b), list)) != NULL) {
+				if (b[0] == '/') { /* make sure it's a full path */
+					if (b[strlen(b) - 1] == '\n')
+						b[strlen(b) - 1] = '\0'; /* get rid of \n */
+					stat(b, &dirent_stat);
+					if (dirent_stat.st_mode & S_IFREG)
+						check_entry(NULL, b);
+					else if (dirent_stat.st_mode & S_IFDIR)
+						search_path(b);
+				}
+			}
+			search_all = 0;
+			fclose(list);
 		}
-	    }
-	    search_all = 0;
-	    fclose (list);
 	}
-    }
-    return;
+	return;
 }
 
-int check_paths (char *dir, char *paths)
+int check_paths(char *dir, char *paths)
 {
-    char *tok, *e, *p;
-    int matched = 0;
+	char *tok, *e, *p;
+	int matched = 0;
 
-    e = strdup (paths);
+	e = strdup(paths);
 
-    tok = strtok_r (e, " ", &p);
-    while (tok != NULL && !matched) {
-	if (!strncmp (tok, dir, strlen (tok) - 1))
-	    matched = 1;
-	tok = strtok_r (NULL, " ", &p);
-    }
+	tok = strtok_r(e, " ", &p);
+	while (tok != NULL && !matched) {
+		if (!strncmp(tok, dir, strlen(tok) - 1))
+			matched = 1;
+		tok = strtok_r(NULL, " ", &p);
+	}
 
-    free(e);
-    return matched;
+	free(e);
+	return matched;
 }
 
 #ifndef HAVE_STRTOK_R
 /* Borrowed from string2.h in glibc 2.1.1, Copyrights apply */
-char *strtok_r (char *s, char sep, char **nextp)
+char *strtok_r(char *s, char sep, char **nextp)
 {
-    char *result;
-    if (s == NULL)
-	s = *nextp;
-    while (*s == sep)
-	++s;
-    if (*s == '\0')
-	result = NULL;
-    else {
-	result = s;
-        while (*s != '\0' && *s != sep)
-	    ++s;
-        if (*s == '\0')
-	    *nextp = s;
-        else {
-	    *s = '\0';
-	    *nextp = s + 1;
+	char *result;
+
+	if (s == NULL)
+		s = *nextp;
+	while (*s == sep)
+		++s;
+	if (*s == '\0')
+		result = NULL;
+	else {
+		result = s;
+		while (*s != '\0' && *s != sep)
+			++s;
+		if (*s == '\0')
+			*nextp = s;
+		else {
+			*s = '\0';
+			*nextp = s + 1;
+		}
 	}
-    }
-    return result;
+	return result;
 }
 #endif
