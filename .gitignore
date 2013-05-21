@@ -7,3 +7,7 @@ source/config.h
 source/Makefile
 source/sxid
 *.o
+debian/files
+debian/sxid.debhelper.log
+debian/sxid.substvars
+debian/sxid
