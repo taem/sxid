@@ -1,4 +1,4 @@
-.TH SXID 1 2013-05-21 "sXid @VERSION@"
+.TH SXID 1 2013-05-21 "@PACKAGE_STRING@"
 .SH NAME
 sxid \- check for changes in s[ug]id files and directories
 .SH SYNOPSIS

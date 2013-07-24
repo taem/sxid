@@ -1,4 +1,4 @@
-/* source/config.h.in.  Generated automatically from configure.in by autoheader.  */
+/* source/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define if your mailer accepts the subject in the body of the mail */
 #undef CL_SUBJ
@@ -9,11 +9,32 @@
 /* Define if you have getopt() */
 #undef HAVE_GETOPT
 
+/* Define to 1 if you have the `strtok_r' function. */
+#undef HAVE_STRTOK_R
+
 /* Define to the location of the default mail program */
 #undef MAIL_PROG
 
-/* Version (set by configure) */
-#undef VERSION
+/* Name of package */
+#undef PACKAGE
 
-/* Define if you have the strtok_r function.  */
-#undef HAVE_STRTOK_R
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Version number of package */
+#undef VERSION

@@ -1,4 +1,4 @@
-.TH SXID.CONF 5 2013-05-21 "sXid @VERSION@"
+.TH SXID.CONF 5 2013-05-21 "@PACKAGE_STRING@"
 .SH NAME
 .B sxid.conf
 \- configuration settings for sXid
