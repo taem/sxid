@@ -1,72 +1,67 @@
-.TH SXID 1 "January 2002" "sXid @VERSION@"
+.TH SXID 1 2013-05-21 "@PACKAGE_STRING@"
 .SH NAME
 sxid \- check for changes in s[ug]id files and directories
 .SH SYNOPSIS
 .B sxid
-[ --config <file> ] [ --nomail ] [ --spotcheck ] [ --listall ]
-.br
+[\fB\-\-config\fP \fIfile\fP] [\fB\-\-nomail\fP] [\fB\-\-spotcheck\fP]
+[\fB\-\-listall\fP]
 .SH DESCRIPTION
-.I  Sxid
+.B sXid
 checks for changes in suid and sgid files and directories based on its last
-check. Logs are stored by default in /var/log/sxid.log.
+check. Logs are stored by default in \fI/var/log/sxid.log\fP.
 The changes are then emailed to the address specified in the configuration
-file. The default location for the config file is
-.I @TMPCONF@/sxid.conf
-but this can be overridden with the --config option and specifying an
-alternate location.
+file. The default location for the config file is \fI@TMPCONF@/sxid.conf\fP
+but this can be overridden with the \fB\-\-config\fP option and specifying an
+alternate \fIfile\fP.
+.SH OPTIONS
+.TP
+\fB\-c\fP, \fB\-\-config\fP \fIfile\fP
+specifies an alternate configuration \fIfile\fP.
+.TP
+\fB\-n\fP, \fB\-\-nomail\fP
+sends output to stdout instead of emailing, useful for spot checks.
+.TP
+\fB\-k\fP, \fB\-\-spotcheck\fP
+Checks for changes by recursing the current working directory. Log files
+will not be rotated and no email sent. All output will go to stdout.
+.TP
+\fB\-l\fP, \fB\-\-listall\fP
+Useful when doing \fB\-\-spotcheck\fP or \fB\-\-nomail\fP
+to list all files that are logged, regardless of changes.
 .SH "OUTPUT"
 The program outputs several different checks concerning the current status of
 the suid and sgid files and directories on the system on which it was run. This
 is a basic overview of the format.
- 
-In the add remove section, new files are preceded by a '+', old ones
-are preceded by a '-' NOTE: that removed does not mean gone from the
+
+In the add remove section, new files are preceded by a \*(lq+\*(rq, old ones
+are preceded by a \*(lq-\*(rq. Note that removed does not mean gone from the
 filesystem, just that it is no longer sgid or suid.
 
 Most of it is pretty easy to understand. On the sections that show
 changes in the file's info (uid, gid, modes...) the format is
-old->new. So if the old owner was 'mail' and it is now 'root' then it
-shows it as mail->root.
+old->new. So if the old owner was \*(lqmail\*(rq and it is now
+\*(lqroot\*(rq then it shows it as mail->root.
 
 The list of files in the checks is in the following format:
-
-        /full/path              *user.group    MODE
-
+.IP
+ /full/path   *user.group   MODE
+.P
 (MODE is the 4 digit mode, as in 4755)
 
-In the changes section, if the line is preceded by an 'i' then that
+In the changes section, if the line is preceded by an \*(lqi\*(rq then that
 item has changed inodes since the last check (regardless of any
-s[ug]id change), if there is an 'm' then the md5sum has changed.
+s[ug]id change), if there is an \*(lqm\*(rq then the md5sum has changed.
 
-If a user or group entry is preceded by a '*' then it's execution bit is
+If a user or group entry is preceded by a \*(lq*\*(rq then it's execution bit is
 set (ie. *root.wheel is suid, root.*wheel is sgid, *root.*wheel is +s).
 
-On the forbidden directories, if
-.I ENFORCE
-is enabled an 'r' will precede forbidden items that were succesfully -s'd,
-and an '!' will show that it was unsuccesfully -s'd (for what ever
-reason).
-.SH OPTIONS
-.TP
-\fB\-c, --config <file>\fR
-specifies an alternate configuration file
-.TP
-\fB\-n, --nomail\fR
-sends output to stdout instead of emailing, useful for spot checks
-.TP
-\fB\-k, --spotcheck\fR
-Checks for changes by recursing the current working directory. Log files
-will not be rotated and no email sent. All output will go to stdout.
-.TP
-\fB\-l, --listall\fR
-Useful when doing
-.B --spotcheck
-or
-.B --nomail
-to list all files that are logged, regardless of changes.
+On the forbidden directories, if \fBENFORCE\fP
+is enabled an \*(lqr\*(rq will precede forbidden items that were
+successfully \-s'd, and an \*(lq!\*(rq will show that it was
+unsuccesfully \-s'd (for what ever reason).
 .SH AUTHOR
 Ben Collins <bcollins@debian.org>
 .SH "REPORTING BUGS"
-Report bugs to current maintainer Timur Birsh <taem@linukz.org>.
+Timur Birsh <taem@linukz.org>
 .SH "SEE ALSO"
 sxid.conf(5)
