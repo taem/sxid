@@ -43,6 +43,6 @@ AC_SUBST([TMPCONF])
 AC_DEFINE_UNQUOTED([CONF_FILE], ["${TMPCONF}/sxid.conf"],
                    [Define to the location of the default config file])
 
-AC_CONFIG_HEADERS([source/config.h])
-AC_CONFIG_FILES([Makefile source/Makefile docs/sxid.1 docs/sxid.conf.5])
+AC_CONFIG_HEADERS([src/config.h])
+AC_CONFIG_FILES([Makefile src/Makefile docs/sxid.1 docs/sxid.conf.5])
 AC_OUTPUT

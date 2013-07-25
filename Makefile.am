@@ -1,6 +1,6 @@
-SUBDIRS = source
+SUBDIRS = src
 
-EXTRA_DIST = contrib examples source/getopt.c source/getopt1.c source/getopt.h
+EXTRA_DIST = contrib examples src/getopt.c src/getopt1.c src/getopt.h
 
 man_MANS = docs/sxid.1 docs/sxid.conf.5
 doc_DATA = README NEWS

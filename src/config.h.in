@@ -1,4 +1,4 @@
-/* source/config.h.in.  Generated from configure.ac by autoheader.  */
+/* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define if your mailer accepts the subject in the body of the mail */
 #undef CL_SUBJ
