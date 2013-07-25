@@ -1,2 +1,2 @@
-source/sxid usr/bin
-docs/sxid.conf etc
+src/sxid usr/bin
+examples/sxid.conf etc
