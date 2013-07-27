@@ -1,29 +1,10 @@
-sXid by Ben Collins <bcollins@debian.org>
+sXid
+====
 
-#####   LICENSE   #####
+suid, sgid file and directory checking.
 
-sxid - suid, sgid file and directory checking
-
-Copyright (C) 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
-
-This is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 2,
-or (at your option) any later version.
-
-This is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public
-License along with sxid; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-02110-1301 USA.
-
-##### End LICENSE #####
-
-OVERVIEW
+Overview
+========
 
 This program is meant to run as a cronjob. I have it run once a day, but
 busy shell boxes may want to run it twice a day. Basically it tracks any
@@ -41,7 +22,7 @@ and add an entry in root's crontab (it needs root permission to check ALL
 files and folders). All log files are created mode 600 so no one will be
 able to get a list.
 
-NOTES on reading the output:
+Notes on reading the output:
 
  - In the add remove section, new files are preceded by a '+', old ones
    are preceded by a '-' NOTE: that removed does not mean gone from the
@@ -65,39 +46,63 @@ NOTES on reading the output:
    forbidden items that were succesfully -s'd, and a '!' will show that
    the was unsuccesfully -s'd (for what ever reason.
 
-INSTALLATION:
+Installation
+============
 
 To install sXid simply (requires GNU make):
 
 	make install
 
-This will configure and compile the program then install it into /usr/bin
-by default, it also places the sxid.conf file into /etc.  You should edit
-the conf file, it is well commented and very basic so no worries. 
+This will configure and compile the program then install it into
+/usr/local/bin by default. You can use sample config file
+examples/sxid.conf. By default sXid looks for config in /usr/local/etc.
+Please edit the conf file, it is well commented and very basic so no worries.
 
 Alternatively you can run ./configure manually with any options you may
 wish (./configure --help for options) then run 'make install'
 
 Afterwards place an entry into root's crontab. You can use the
-line in docs/sxid.cron.example.
+line in examples/sxid.cron.
 
 sXid is known to compile on these platforms:
 
 * Solaris 2.7/2.6/2.5.1x)
 * Linux GLIBC 2.0/2.1 and Libc5 on kernels 2.0.x to 2.2.x
 * AIX 4.x (and possibly 3.x)
-* HP/UX (Peter Sulecki <psulecki@ios.krakow.pl>)
-* Tru64 UNIX (Marc Baudoin <babafou@pasteur.fr>)
+* HP/UX ([Peter Sulecki](mailto:psulecki@ios.krakow.pl))
+* Tru64 UNIX ([Marc Baudoin](mailto:babafou@pasteur.fr))
 
-It should compile on others as well, let me know or send me patches that
-you used to get it to work.
+It should compile on others as well.
 
-FINALLY:
+Finally
+=======
 
 NOTE: If you were using any version prior to 3.2.4 you need to archive and
 remove the old logs since they aren't compatible with this version and
 will cause improbable errors in the output.
 
-Report bugs to current maintainer Timur Birsh <taem@linukz.org>.
+Development
+===========
+
+If you have patches, please fork sXid at GitHub
+https://github.com/taem/sxid. Or simply send your patches by e-mail (see
+below).
+
+If you found a bug, please report it at https://github.com/taem/sxid/issues.
+
+License
+=======
+
+sXid is distributed under the terms GNU General Public License Version 2
+or greater. Please see COPYING for full GNU GPL text.
+
+Homepage
+========
 
 Latest version can be found at http://linukz.org/sxid.shtml.
+
+Author
+======
+
+Original author is [Ben Collins](mailto:bcollins@debian.org).
+Later [Timur Birsh](mailto:taem@linukz.org) picked up maintenance.
