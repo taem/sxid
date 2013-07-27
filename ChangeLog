@@ -1,0 +1,80 @@
+2013-07-26  Timur Birsh  <taem@linukz.org>
+
+	Use Markdown format
+
+2013-07-25  Timur Birsh  <taem@linukz.org>
+
+	Update copyright notice
+
+	Add license file 'COPYING'
+
+	Add /media and /sys to 'EXCLUDE' option
+
+	Check for sxid binary before executing it
+
+	Binary should be install in bindir
+
+	Add 'autogen.sh' to distribution
+
+	Rename 'source' dir as 'src'
+
+	Add 'autogen.sh' script
+	It runs 'autoreconf' to populate autotools files.
+
+	Ignore some autotools files
+
+	Update autoconf settings to version 2.69 and use automake 1.13.3
+
+2013-05-28  Timur Birsh  <taem@linukz.org>
+
+	Move sxid.{conf,cron} to examples dir
+
+	Move rpm spec to contrib dir
+
+	Remove empty TODO
+
+2013-05-24  Timur Birsh  <taem@linukz.org>
+
+	Polish manpages
+
+2013-05-21  Timur Birsh  <taem@linukz.org>
+
+	Remove .example extension
+
+2012-10-10  Timur Birsh  <taem@linukz.org>
+
+	In get_value() signature, swap 'key' and 'value' arguments
+
+	Move 'count' variable declaration into the while loop
+
+	Get error string by strerror()
+
+	Rename 'temp' variable to 'value'
+
+	Use access() for checking config file
+
+	Refactor get_value() little a bit
+
+	Remove unused optindex variable
+
+2012-10-09  Timur Birsh  <taem@linukz.org>
+
+	Use memset() instead of the legacy bzero()
+
+	Use EXIT_FAILURE macros
+
+	Fix compilation warnings
+	gcc -g -O2 -I. -c conffile.c -o conffile.o
+	conffile.c: In function ‘get_value’:
+	conffile.c:50:32: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+	conffile.c:50:29: warning: comparison between pointer and integer [enabled by default]
+	conffile.c:51:34: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+	conffile.c:51:31: warning: comparison between pointer and integer [enabled by default]
+
+	Add .gitignore
+
+	Use Linux kernel coding style
+
+2009-10-09  Timur Birsh  <taem@linukz.org>
+
+	Fix manpage error
