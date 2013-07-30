@@ -61,7 +61,6 @@ void sxid_usage()
 		"regardless of changes\n");
 	fprintf(stdout, "-c, --config <file>     Specifies alternative config "
 		"file\n");
-	exit(EXIT_FAILURE);
 }
 
 static
@@ -104,8 +103,12 @@ int main(int argc, char *argv[])
 		case 'V':
 			print_version();
 			break;
+		case 'h':
+			sxid_usage();
+			exit(EXIT_SUCCESS);
 		default:
 			sxid_usage();
+			exit(EXIT_FAILURE);
 		}
 	}
 	argc -= optind;
