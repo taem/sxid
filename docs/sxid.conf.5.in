@@ -1,99 +1,135 @@
-.TH SXID.CONF 5 2013-05-21 "@PACKAGE_STRING@"
-.SH NAME
-.B sxid.conf
-\- configuration settings for sXid
-.SH DESCRIPTION
-This is the configuration file used by \fBsXid\fP to define it's parameters for
-execution. By default it is \fI@TMPCONF@/sxid.conf\fP
-but can be anything using the \fB\-\-config\fP command line option for
-\fBsXid\fP.
-Options in this file are in the form of \fBOPTION\fP = "\fIVALUE\fP".
-Note that the \fIVALUE\fP must be contained in double quotes.
-.SH OPTIONS
-.TP
-\fBALWAYS_NOTIFY\fP
-If \fBsXid\fP does not find any changes it will not send an email unless
-you specify \*(lqyes\*(rq here.
-.TP
-\fBALWAYS_ROTATE\fP
-Usually \fBsXid\fP
+.Dd July 29, 2013
+.Dt SXID 5
+.Os
+.Sh NAME
+.Nm sxid.conf
+.Nd configuration settings for sXid
+.Sh DESCRIPTION
+.Pp
+This is the configuration file used by
+.Nm sXid
+to define it's parameters for execution. By default it is
+.Pa @TMPCONF@/sxid.conf
+but can be anything using the
+.Fl -config
+command line option for
+.Nm sXid .
+.Pp
+Options in this file are in the form of
+.Bd -literal
+OPTION = "VALUE"
+.Ed
+.Pp
+Note that the
+.Ar VALUE
+must be contained in double quotes.
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Va ALWAYS_NOTIFY
+If
+.Nm sXid
+does not find any changes it will not send an email unless
+you specify
+.Qq yes
+here.
+.It Va ALWAYS_ROTATE
+Usually
+.Nm sXid
 will only rotate the log files when there is a change from the last run. This
 is usually best, since all logs will record a change rather than just a run of
-the program. If you want to rotate the logs every time \fBsXid\fP
-is run, regardless of changes, specify \*(lqyes\*(rq here.
-.TP
-\fBEMAIL\fP
-Where to send the email containing the output of changes every time \fBsXid\fP
+the program. If you want to rotate the logs every time
+.Nm sXid
+is run, regardless of changes, specify
+.Qq yes
+here.
+.It Va EMAIL
+Where to send the email containing the output of changes every time
+.Nm sXid
 is run. Example:
-
+.Bd -literal
 EMAIL = "System Administrator <sysadmin@example.com>"
-.TP
-\fBENFORCE\fP
-Normally \fBsXid\fP only flags items which are suid or sgid and are in a
-\fBFORBIDDEN\fP directory. With this option set to \*(lqyes\*(rq \fBsXid\fP
+.Ed
+.It Va ENFORCE
+Normally
+.Nm sXid
+only flags items which are suid or sgid and are in a
+.Va FORBIDDEN
+directory. With this option set to
+.Qq yes
+.Nm sXid
 will remove the s[ug]id bit(s) on any files or directories it finds in forbidden
 directories and report any changes in the email. Note that directories listed
-in \fBFORBIDDEN\fP are searched regardless of whether or not they are listed in
-\fBSEARCH\fP. However, \fBEXCLUDED\fP
-options still apply to directories that fall under them.
-.TP
-\fBEXCLUDE\fP
+in
+.Va FORBIDDEN
+are searched regardless of whether or not they are listed in
+.Va SEARCH .
+However,
+.Va EXCLUDE
+option still apply to directories that fall under them.
+.It Va EXCLUDE
 A space separated list of directories to exclude from the search. Note that
-if a \fBSEARCH\fP path falls under an \fBEXCLUDE\fP
+if a
+.Va SEARCH
+path falls under an
+.Va EXCLUDE
 path that it will still be searched. This is useful for excluding whole
 directories and only specifying one. Example:
-
+.Bd -literal
 SEARCH  = "/usr /usr/src/linux"
-
 EXCLUDE = "/usr/src"
-.TP
-\fBEXTRA_LIST\fP
+.Ed
+.It Va EXTRA_LIST
 File that contains a list of (each on it's own line)  of other files that
-sxid should monitor. This is useful for files that aren't +s, but relate
+.Nm sXid
+should monitor. This is useful for files that aren't +s, but relate
 to system integrity (tcpd, inetd, apache...). Example: 
-
+.Bd -literal
 EXTRA_LIST = "/etc/sxid.list"
-.TP
-\fBFORBIDDEN\fP
+.Ed
+.It Va FORBIDDEN
 A space separated list of directories that are not supposed to contain any
 suid or sgid items. Items which are suid or sgid in these directories are
 flagged in the email separately from the other listings whether there are
 other changes or not. Example:
-
+.Bd -literal
 FORBIDDEN = "/tmp /home"
-.TP
-\fBIGNORE_DIRS\fP
+.Ed
+.It Va IGNORE_DIRS
 Ignore entries for directories in these paths. This means that only files
 will be recorded. You can effectively ignore all directory entries by 
-setting this to \*(lq/\*(rq.
-.TP
-\fBKEEP_LOGS\fP
+setting this to
+.Qq / .
+.It Va KEEP_LOGS
 This is a numerical value for how many log files to keep when rotating.
-.TP
-\fBLISTALL\fP
+.It Va LISTALL
 Forces a list of all entries to be included in th output. Implies
-\fBALWAYS_NOTIFY\fP.
-.TP
-\fBLOG_FILE\fP
+.Va ALWAYS_NOTIFY .
+.It Va LOG_FILE
 The full path of where to store the log files. These will be rotated, each
 rotated log being suffixed with a digit. The directories must already exist.
-This is usually \fI/var/log/sxid.log\fP. Rotated logs would look like
-\fI/var/log/sxid.log.n\fP where \*(lqn\*(rq is the number in the rotation.
-The current log has no suffix.
-.TP
-\fBMAIL_PROG\fP
+This is usually
+.Pa /var/log/sxid.log .
+Rotated logs would look like
+.Pa /var/log/sxid.log.n
+where
+.Dq n
+is the number in the rotation. The current log has no suffix.
+.It Va MAIL_PROG
 Mail program. This changes the default compiled in mailer for reports. You
 only need this if you have changed it's location and don't want to
-recompile sxid.
-.TP
-\fBSEARCH\fP
-A space separated list of directories to search. Sxid will use these
-as a starting point for it's searches. Example:
-
+recompile
+.Nm sXid.
+.It Va SEARCH
+A space separated list of directories to search.
+.Nm sXid
+will use these as a starting point for it's searches. Example:
+.Bd -literal
 SEARCH = "/usr /bin /lib"
-.SH AUTHOR
-Ben Collins <bcollins@debian.org>
-.SH "REPORTING BUGS"
-Timur Birsh <taem@linukz.org>
-.SH "SEE ALSO"
-sxid(1)
+.Ed
+.El
+.Sh AUTHOR
+.An Ben Collins Aq bcollins@debian.org
+.Sh "REPORTING BUGS"
+.An Timur Birsh Aq taem@linukz.org
+.Sh "SEE ALSO"
+.Xr sxid 1
