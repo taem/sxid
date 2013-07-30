@@ -12,6 +12,7 @@
 .Op Fl k, -spotcheck
 .Op Fl l, -listall
 .Op Fl h, -help
+.Op Fl V, -version
 .Ek
 .Sh DESCRIPTION
 .Nm sXid
@@ -44,6 +45,8 @@ or
 to list all files that are logged, regardless of changes.
 .It Fl h, -help
 Display a brief help message.
+.It Fl V, -version
+Print version and exit.
 .El
 .Sh OUTPUT
 .Pp
