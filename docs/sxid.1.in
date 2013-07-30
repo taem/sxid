@@ -11,6 +11,7 @@
 .Op Fl n, -nomail
 .Op Fl k, -spotcheck
 .Op Fl l, -listall
+.Op Fl h, -help
 .Ek
 .Sh DESCRIPTION
 .Nm sXid
@@ -41,6 +42,8 @@ Useful when doing
 or
 .Fl -nomail
 to list all files that are logged, regardless of changes.
+.It Fl h, -help
+Display a brief help message.
 .El
 .Sh OUTPUT
 .Pp
