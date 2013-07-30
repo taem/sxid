@@ -22,7 +22,7 @@ EXTRA_DIST = contrib examples src/getopt.c src/getopt1.c src/getopt.h \
 	     autogen.sh README.md
 
 man_MANS = docs/sxid.1 docs/sxid.conf.5
-doc_DATA = README.md NEWS COPYING
+doc_DATA = README.md NEWS COPYING ChangeLog
 
 contribdir = $(docdir)/contrib
 contrib_DATA = contrib/sxid.spec
