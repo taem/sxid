@@ -34,6 +34,7 @@ struct option cmd_options[] =
 {
 	{ "nomail",    no_argument,	     0, 'n' },
 	{ "help",      no_argument,	     0, 'h' },
+	{ "version",   no_argument,	     0, 'V' },
 	{ "listall",   no_argument,	     0, 'l' },
 	{ "spotcheck", no_argument,	     0, 'k' },
 	{ "config",    required_argument,    0, 'c' },
@@ -47,12 +48,11 @@ int notify_diff = 0;
 int nomail = 0;
 
 static
-void sxid_usage(char *prog_name)
+void sxid_usage()
 {
-	fprintf(stdout, "sXid %s: (C) 1999, 2000, 2002 by Ben Collins\n",
-		sxid_version);
-	fprintf(stdout, "Usage: %s [options]\n", prog_name);
+	fprintf(stdout, "Usage: sxid [options]\n");
 	fprintf(stdout, "-h, --help              This help output\n");
+	fprintf(stdout, "-V, --version           Print version and exit\n");
 	fprintf(stdout, "-k, --spotcheck         Run this using spotcheck rules "
 		"(see man page)\n");
 	fprintf(stdout, "-n, --nomail            Send output to stdout instead "
@@ -61,7 +61,19 @@ void sxid_usage(char *prog_name)
 		"regardless of changes\n");
 	fprintf(stdout, "-c, --config <file>     Specifies alternative config "
 		"file\n");
-	exit(EXIT_FAILURE);
+}
+
+static
+void print_version()
+{
+	fprintf(stdout, "sXid %s\n", sxid_version);
+	fprintf(stdout, "Copyright (C) 1999, 2000, 2002 Ben Collins\n");
+	fprintf(stdout, "Copyright (C) 2009, 2013 Timur Birsh\n");
+	fprintf(stdout, "This is free software; see the source for copying "
+		"conditions.  There is NO\n"
+		"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
+		"PARTICULAR PURPOSE.\n");
+	exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char *argv[])
@@ -73,7 +85,7 @@ int main(int argc, char *argv[])
 	umask(077);
 	config_options.flags = 0x00;
 
-	while ((opt = getopt_long_only(argc, argv, "nhlkc:", cmd_options,
+	while ((opt = getopt_long_only(argc, argv, "nhVlkc:", cmd_options,
 						NULL)) != EOF) {
 		switch (opt) {
 		case 'c':
@@ -88,8 +100,15 @@ int main(int argc, char *argv[])
 		case 'k':
 			config_options.flags |= FLAG_SPOT;
 			break;
+		case 'V':
+			print_version();
+			break;
+		case 'h':
+			sxid_usage();
+			exit(EXIT_SUCCESS);
 		default:
-			sxid_usage(argv[0]);
+			sxid_usage();
+			exit(EXIT_FAILURE);
 		}
 	}
 	argc -= optind;
