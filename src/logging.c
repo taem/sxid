@@ -166,7 +166,7 @@ static void check_add_rem(FILE * mail_file)
 static void check_attr(FILE * mail_file)
 {
 	struct file_entry *p = global_log;
-	char ino, md5;
+	char ino, hash_sum;
 
 	fprintf(mail_file, "Checking for changed attributes or sums/inodes:\n");
 
@@ -178,7 +178,7 @@ static void check_attr(FILE * mail_file)
 				ino = p->flags & FE_CHSUM ? 'm' : ' ';
 			else
 				ino = ' ';
-			md5 = p->flags & FE_CHINODE ? 'i' : ' ';
+			hash_sum = p->flags & FE_CHINODE ? 'i' : ' ';
 
 			if (p->flags & FE_CHMODE)
 				sprintf(old_pmode, "%o->",
@@ -192,7 +192,7 @@ static void check_attr(FILE * mail_file)
 			space2 = fill_space(32 - strlen(p->path) -
 					((p->mode & S_IFDIR) ? 1 : 0));
 
-			fprintf(mail_file, "%c%c %s%s%s%s%s%s%o\n", ino, md5,
+			fprintf(mail_file, "%c%c %s%s%s%s%s%s%o\n", ino, hash_sum,
 				p->path, (p->mode & S_IFDIR) ? "/" : "", space2,
 				perms, space1, old_pmode, (int)p->mode & 0x0FFF);
 
@@ -360,9 +360,9 @@ void init_file_entries(void)
 
 		tok = strtok(NULL, search_tok);
 		if (tok != NULL)
-			p->md5 = strdup(tok);
+			p->hash_sum = strdup(tok);
 		else
-			p->md5 = NULL;
+			p->hash_sum = NULL;
 		p->flags = 0;
 		p->flags |= FE_OLD;
 	}
@@ -431,7 +431,7 @@ struct file_entry *get_fe_bypath(char *path)
 	return p;
 }
 
-int add_file_entry(char *path, struct stat dirent_stat, char *md5)
+int add_file_entry(char *path, struct stat dirent_stat, char *hash_sum)
 {
 	struct file_entry *p;
 
@@ -447,10 +447,10 @@ int add_file_entry(char *path, struct stat dirent_stat, char *md5)
 		p->old_gid = -1;
 		p->old_mode = -1;
 
-		if (md5 != NULL)
-			p->md5 = strdup(md5);
+		if (hash_sum != NULL)
+			p->hash_sum = strdup(hash_sum);
 		else
-			p->md5 = NULL;
+			p->hash_sum = NULL;
 		p->flags = 0;
 		p->flags |= FE_NEW;
 	} else {
@@ -474,13 +474,13 @@ int add_file_entry(char *path, struct stat dirent_stat, char *md5)
 			p->inode = dirent_stat.st_ino;
 			p->flags |= FE_CHINODE;
 		}
-		if (md5 != NULL) {
-			if (do_check(path, p->md5)) {
-				strcpy(p->md5, md5);
+		if (hash_sum != NULL) {
+			if (strcmp(hash_sum, p->hash_sum)) {
+				strcpy(p->hash_sum, hash_sum);
 				p->flags |= FE_CHSUM;
 			}
 		} else
-			p->md5 = NULL;
+			p->hash_sum = NULL;
 	}
 	return 0;
 }
@@ -512,7 +512,7 @@ void save_and_rotate(void)
 			fprintf(new_log, "%s%c%d%c%d%c%d%c%d%c%s\n", p->path,
 				0x1e, (int)p->uid, 0x1e, (int)p->gid, 0x1e,
 				(int)p->mode, 0x1e, (int)p->inode, 0x1e,
-				p->md5 != NULL ? p->md5 : "");
+				p->hash_sum != NULL ? p->hash_sum : "");
 		p = p->next;
 	}
 

@@ -42,10 +42,6 @@ void notify_email(void);
 int check_paths(char *, char *);
 void start_search(void);
 
-/* md5sum.c */
-int mdfile(FILE * fp, unsigned char *digest);
-int do_check(char *path, char *md5sum);
-
 /* logging.c */
 void init_file_entries(void);
 void compare_output(void);
@@ -91,7 +87,7 @@ struct file_entry {
 	gid_t old_gid;
 	mode_t mode;
 	mode_t old_mode;
-	char *md5;
+	char *hash_sum;
 	ino_t inode;
 	u_int flags;
 };
@@ -100,7 +96,7 @@ struct file_entry {
 #define FE_OLD          0x0001  /* Old entry (default, get's unset if current) */
 #define FE_NEW          0x0002  /* New entry */
 #define FE_CHMODE       0x0004  /* Changed mode (r,w or x) */
-#define FE_CHSUM        0x0010  /* Changed md5sum (files only) */
+#define FE_CHSUM        0x0010  /* Changed sha256sum (files only) */
 #define FE_CHINODE      0x0020  /* Changed inode */
 #define FE_CHUSER       0x0040  /* User id changed */
 #define FE_CHGRP        0x0100  /* Group id changed */

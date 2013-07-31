@@ -82,7 +82,7 @@ In the changes section, if the line is preceded by an
 then that item has changed inodes since the last check (regardless of any
 s[ug]id change), if there is an
 .Dq m
-then the md5sum has changed.
+then the SHA-256 checksum has changed.
 .Pp
 If a user or group entry is preceded by a
 .Dq *

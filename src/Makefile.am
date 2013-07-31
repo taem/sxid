@@ -17,4 +17,4 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 bin_PROGRAMS = sxid
-sxid_SOURCES = conffile.c logging.c md5.c md5sum.c notify.c search.c sxid.c md5.h sxid.h
+sxid_SOURCES = conffile.c logging.c notify.c search.c sha2.c sxid.c sha2.h sxid.h
