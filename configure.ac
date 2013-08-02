@@ -18,7 +18,8 @@ dnl 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([sXid], [4.3], [taem@linukz.org], [sxid], [http://linukz.org/sxid.shtml])
+AC_INIT([sXid], [4.20130802], [taem@linukz.org], [sxid],
+        [http://linukz.org/sxid.shtml])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 
 AC_PROG_CC
