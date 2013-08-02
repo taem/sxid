@@ -27,6 +27,7 @@
 #include <limits.h>
 
 #include "sxid.h"
+#include "sha2.h"
 
 /*
  * Tells the search function to check all files,
@@ -99,25 +100,17 @@ static __inline__ void check_entry(struct dirent *dir_entry, char *dir)
 			if (dirent_stat.st_mode & S_IFREG &&
 				(dirent_stat.st_mode &
 					(S_ISUID | S_ISGID) || search_all)) {
-				FILE *fp = NULL;
-				unsigned char digest[16 + 1];
+				unsigned char digest[32 + 1];
 				int i;
-				char digest_hex[(16 * 2) + 1], *p;
+				char digest_hex[(32 * 2) + 1], *p;
 
-				fp = fopen(buf, "r");
-				if (fp == NULL) {
-					fprintf(stderr, "W: opening %s for md5 "
-						"read\n", buf);
+				if (sha2_file(buf, digest, 0)) {
+					fprintf(stderr, "W: reading %s for "
+						"SHA-256\n", buf);
 					return;
 				}
-				if (mdfile(fp, digest)) {
-					fprintf(stderr, "W: reading %s for md5\n",
-						buf);
-					return;
-				}
-				fclose(fp);
 
-				for (i = 0, p = digest_hex; i < 16; ++i)
+				for (i = 0, p = digest_hex; i < 32; ++i)
 					p += sprintf(p, "%02x", digest[i]);
 
 				add_file_entry(buf, dirent_stat, digest_hex);

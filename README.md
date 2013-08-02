@@ -13,9 +13,9 @@ ones that aren't set any more, or they have changed bits or other modes
 then it reports the changes. You can also run this manually for spot
 checking.
 
-It also tracks s[ug]id files by md5 checksums. This helps detect if a root
-kit has been installed which would not show under normal name and
-permissions checking. Directories are tracked by inodes.
+It also tracks s[ug]id files by SHA-256 checksums. This helps detect
+if a root kit has been installed which would not show under normal
+name and permissions checking. Directories are tracked by inodes.
 
 To install, set the options in sxid.conf (/etc/sxid.conf when installed)
 and add an entry in root's crontab (it needs root permission to check ALL
@@ -39,7 +39,8 @@ Notes on reading the output:
 
    In the changes section, if the line is preceded by an 'i' then that
    item has changed inodes since the last check (regardless of any
-   s[ug]id change), if there is an 'm' then the md5sum has changed.
+   s[ug]id change), if there is an 'm' then the SHA-256 checksum has
+   changed.
  - If a user or group entry is preceded by a '*' then that is +s
    (ie. *root.wheel is suid, root.*wheel is sgid, *root.*wheel is +s)
  - On the forbidden directories, it enfore is enabled a 'r' will precede

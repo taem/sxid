@@ -1,3 +1,23 @@
+sXid 4.20130802
+  * New version scheme - V.YYYYMMDD. V is a major version number,
+    YYYYMMDD is a date of sXid release.
+  * Now sXid uses SHA-256 hash function to track files.
+    MD5 is considered cryptographically broken.
+    Please see http://www.kb.cert.org/vuls/id/836068.
+    SHA-256 implementation is taken from PolarSSL and distributed
+    under the terms GNU General Public License Version 2 or later.
+    Please see https://polarssl.org.
+  * autoconf settings updated to version 2.69.
+  * Use automake 1.13.3 to generate Makefiles.
+  * --version option added.
+  * /media and /sys directories added to EXCLUDE option.
+  * Manpages converted to mdoc macro.
+  * README converted to Markdown format.
+  * Some directories and files reorganisation.
+  * License file COPYING added.
+  * Minor code improvements.
+  * Misc bug fixes.
+
 sXid 4.2
 
   * Release used resources. Resource leaks found by cppcheck:

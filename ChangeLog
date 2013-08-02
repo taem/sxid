@@ -1,3 +1,27 @@
+2013-07-31  Timur Birsh  <taem@linukz.org>
+
+	Use SHA-256 hash function
+	MD5 is considered cryptographically broken.
+	Please see http://www.kb.cert.org/vuls/id/836068.
+
+	SHA-256 implementation is taken from PolarSSL and distributed
+	under the terms GNU General Public License Version 2 or later.
+	Please see https://polarssl.org.
+
+2013-07-30  Timur Birsh  <taem@linukz.org>
+
+	'--help' option should terminate program with the success exit code
+
+	Add '--version' option
+
+	Add '--help' option
+
+	Use groff's mdoc macro
+
+2013-07-27  Timur Birsh  <taem@linukz.org>
+
+	Add GNU-style change log
+
 2013-07-26  Timur Birsh  <taem@linukz.org>
 
 	Use Markdown format
