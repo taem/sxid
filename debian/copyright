@@ -8,6 +8,14 @@ Copyright: 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
            2010-2013 Timur Birsh <taem@linukz.org>
 License: GPL-2+
 
+Files: src/getopt.c src/getopt1.c src/getopt.h
+Copyright: 1989, 90, 91, 92, 93, 94 Free Software Foundation, Inc.
+License: GPL-2+
+
+Files: src/sha2.c src/sha2.h
+Copyright: 2006-2013, Brainspark B.V.
+License: GPL-2+
+
 License: GPL-2+
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
