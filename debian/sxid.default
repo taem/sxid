@@ -1,0 +1,5 @@
+# Set this to "yes" to enable cron entry in /etc/cron.daily/sxid
+ENABLE="no"
+
+# Pass additional options to sXid
+SXID_OPTS=

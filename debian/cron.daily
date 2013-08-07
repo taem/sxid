@@ -1,6 +1,9 @@
 #!/bin/sh
 
-SXID_OPTS=
+. /etc/default/sxid
+ENABLE=${ENABLE:-no}
+
+[ ! "$ENABLE" = "yes" ] && exit 0
 
 if [ -x /usr/bin/sxid ]; then
 	/usr/bin/sxid ${SXID_OPTS}
