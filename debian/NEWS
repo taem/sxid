@@ -1,0 +1,11 @@
+sxid (4.20130802-1) unstable; urgency=low
+
+  Now sXid uses SHA-256 hash function to track files.
+  MD5 is considered cryptographically broken.
+  Please see http://www.kb.cert.org/vuls/id/836068.
+
+  According to the above, you need to backup and remove log files
+  since they aren't compatible with this version. Then set $ENABLE
+  in /etc/default/sxid to "yes" to enable cron entry.
+
+ -- Timur Birsh <taem@linukz.org>  Wed, 07 Aug 2013 14:14:53 +0600

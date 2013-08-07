@@ -1,3 +1,26 @@
+sxid (4.20130802-1) unstable; urgency=low
+
+  * New upstream release:
+    - please read NEWS.Debian for changes in the upstream.
+  * debian/changelog: fix lintian warning 'debian-changelog-line-too-long'.
+  * debian/compat: bump debhelper version to 9.
+  * debian/control:
+    - bump standards version to 3.9.4.
+    - update Vcs-* fields.
+    - add ${misc:Depends}.
+    - update extended description.
+  * debian/copyright:
+    - follow DEP5.
+    - add copyright for files src/{getopt.c,getopt1.c,getopt.h,sha2.c,sha2.h}.
+  * debian/cron.daily, debian/sxid.default:
+    - run sXid if $ENABLE equals to "yes".
+  * debian/docs, debian/install, debian/manpages, debian/rules:
+    - use debhelper command sequencer.
+  * /debian/source/format: bump package source version to '3.0 (quilt)'.
+  * debian/source/options: use xz compression for debian tarball.
+
+ -- Timur Birsh <taem@linukz.org>  Fri, 02 Aug 2013 16:28:34 +0600
+
 sxid (4.2-1) unstable; urgency=low
 
   * New upstream release:
