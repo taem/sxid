@@ -18,7 +18,7 @@ reports the changes. You can also run this manually for spot checking.
 It tracks s[ug]id files by md5 checksums. This helps detect if your files
 have been tampered with, would not show under normal name and permissions
 checking. Directories are tracked by inodes.
-	
+
 %changelog
 * Mon Jun 14 1999 Alexandr D. Kanevskiy <kad@blackcatlinux.com>
 - Initial build for BCL 6.0
@@ -28,11 +28,11 @@ checking. Directories are tracked by inodes.
 - Updated spec
 
 %prep
-%setup 
+%setup
 
 %build
 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
- 
+
 %install
 rm -rf $RPM_BUILD_ROOT
 

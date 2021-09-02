@@ -82,7 +82,7 @@ EXCLUDE = "/usr/src"
 File that contains a list of (each on it's own line)  of other files that
 .Nm sXid
 should monitor. This is useful for files that aren't +s, but relate
-to system integrity (tcpd, inetd, apache...). Example: 
+to system integrity (tcpd, inetd, apache...). Example:
 .Bd -literal
 EXTRA_LIST = "/etc/sxid.list"
 .Ed
@@ -96,7 +96,7 @@ FORBIDDEN = "/tmp /home"
 .Ed
 .It Va IGNORE_DIRS
 Ignore entries for directories in these paths. This means that only files
-will be recorded. You can effectively ignore all directory entries by 
+will be recorded. You can effectively ignore all directory entries by
 setting this to
 .Qq / .
 .It Va KEEP_LOGS
