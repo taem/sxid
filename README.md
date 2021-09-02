@@ -44,8 +44,8 @@ Notes on reading the output:
  - If a user or group entry is preceded by a '*' then that is +s
    (ie. *root.wheel is suid, root.*wheel is sgid, *root.*wheel is +s)
  - On the forbidden directories, it enfore is enabled a 'r' will precede
-   forbidden items that were succesfully -s'd, and a '!' will show that
-   the was unsuccesfully -s'd (for what ever reason.
+   forbidden items that were successfully -s'd, and a '!' will show that
+   the was unsuccessfully -s'd (for what ever reason.
 
 Installation
 ============

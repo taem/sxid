@@ -86,7 +86,7 @@ then the SHA-256 checksum has changed.
 .Pp
 If a user or group entry is preceded by a
 .Dq *
-then it's execution bit is set (ie. *root.wheel is suid, root.*wheel
+then its execution bit is set (i.e. *root.wheel is suid, root.*wheel
 is sgid, *root.*wheel is +s).
 .Pp
 On the forbidden directories, if
@@ -97,7 +97,7 @@ will precede forbidden items that were successfully \-s'd, and an
 .Do
 !
 .Dc
-will show that it was unsuccesfully \-s'd (for what ever reason).
+will show that it was unsuccessfully \-s'd (for what ever reason).
 .Sh AUTHOR
 .An Ben Collins Aq bcollins@debian.org
 .Sh "REPORTING BUGS"

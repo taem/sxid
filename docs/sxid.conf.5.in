@@ -102,7 +102,7 @@ setting this to
 .It Va KEEP_LOGS
 This is a numerical value for how many log files to keep when rotating.
 .It Va LISTALL
-Forces a list of all entries to be included in th output. Implies
+Forces a list of all entries to be included in the output. Implies
 .Va ALWAYS_NOTIFY .
 .It Va LOG_FILE
 The full path of where to store the log files. These will be rotated, each
