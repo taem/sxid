@@ -21,11 +21,11 @@ sXid 4.20130802
 sXid 4.2
 
   * Release used resources. Resource leaks found by cppcheck:
-    
+
     [./source/logging.c:374]: (error) Resource leak: log
     [./source/md5sum.c:60]: (error) Resource leak: fp
     [./source/search.c:171]: (error) Resource leak: list
-    
+
     Thanks to George Danchev for pointing this out.
 
  -- Timur Birsh <taem@linukz.org>  Wed, 14 Sep 2009 21:11:45 +0600

@@ -1,6 +1,6 @@
 /*
  * sxid - suid, sgid file and directory checking
- * sxid.h - defines and declerations for the main program
+ * sxid.h - defines and declarations for the main program
  *
  * Copyright © 1999, 2000, 2002 Ben Collins <bcollins@debian.org>
  * Copyright © 2009, 2013 Timur Birsh <taem@linukz.org>
@@ -93,7 +93,7 @@ struct file_entry {
 };
 
 /* Flags for file entries */
-#define FE_OLD          0x0001  /* Old entry (default, get's unset if current) */
+#define FE_OLD          0x0001  /* Old entry (default, gets unset if current) */
 #define FE_NEW          0x0002  /* New entry */
 #define FE_CHMODE       0x0004  /* Changed mode (r,w or x) */
 #define FE_CHSUM        0x0010  /* Changed sha256sum (files only) */

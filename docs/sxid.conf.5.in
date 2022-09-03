@@ -82,7 +82,7 @@ EXCLUDE = "/usr/src"
 File that contains a list of (each on it's own line)  of other files that
 .Nm sXid
 should monitor. This is useful for files that aren't +s, but relate
-to system integrity (tcpd, inetd, apache...). Example: 
+to system integrity (tcpd, inetd, apache...). Example:
 .Bd -literal
 EXTRA_LIST = "/etc/sxid.list"
 .Ed
@@ -96,13 +96,13 @@ FORBIDDEN = "/tmp /home"
 .Ed
 .It Va IGNORE_DIRS
 Ignore entries for directories in these paths. This means that only files
-will be recorded. You can effectively ignore all directory entries by 
+will be recorded. You can effectively ignore all directory entries by
 setting this to
 .Qq / .
 .It Va KEEP_LOGS
 This is a numerical value for how many log files to keep when rotating.
 .It Va LISTALL
-Forces a list of all entries to be included in th output. Implies
+Forces a list of all entries to be included in the output. Implies
 .Va ALWAYS_NOTIFY .
 .It Va LOG_FILE
 The full path of where to store the log files. These will be rotated, each
